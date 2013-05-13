@@ -4,3 +4,8 @@
 /SDWeb2/dist/
 /SDGoogle/target/
 /VaadinBaseBundle/target/
+/*/target/
+/*/.settings/
+.settings/
+*.project
+*.classpath
