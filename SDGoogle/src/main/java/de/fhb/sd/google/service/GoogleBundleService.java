@@ -14,54 +14,32 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package de.fhb.sd.twitter.service;
+package de.fhb.sd.google.service;
 
-import de.fhb.sd.api.twitter.TwitterLocal;
-import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.twitter.domain.TwitterMessage;
-import java.util.Date;
-import java.util.logging.Level;
+import de.fhb.sd.api.google.GoogleLocal;
 import java.util.logging.Logger;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import javax.ejb.EJB;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.BundleListener;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
-import twitter4j.DirectMessage;
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.TwitterBase;
-import twitter4j.TwitterException;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.User;
-import twitter4j.UserList;
-import twitter4j.UserStreamListener;
-import twitter4j.auth.AccessToken;
 
 /**
- * This Bean connects to Twitter and streams messages.
+ * This Bean connects to Google and streams messages.
  *
  * @author Michael Koppen <michael.koppen@googlemail.com>
  */
 @Stateless
 @Startup
-public class TwitterBundleService implements BundleActivator, ServiceListener {
+public class GoogleBundleService implements BundleActivator, ServiceListener {
 
-	private final static Logger LOG = Logger.getLogger(TwitterBundleService.class.getName());
+	private final static Logger LOG = Logger.getLogger(GoogleBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
 
-	public TwitterBundleService() {
+	public GoogleBundleService() {
 	}
 
 	@Override
@@ -70,12 +48,12 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		context.registerService(TwitterLocal.class.getName(), new TwitterService(), null);
+		context.registerService(GoogleLocal.class.getName(), new GoogleService(), null);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		context.ungetService(context.getServiceReference(TwitterLocal.class.getName()));
+		context.ungetService(context.getServiceReference(GoogleLocal.class.getName()));
 		context.removeServiceListener(this);
 	}
 
