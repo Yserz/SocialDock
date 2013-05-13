@@ -1,5 +1,6 @@
 package de.fhb.sd.api;
 
+import de.fhb.sd.api.kernel.KernelServiceLocal;
 import java.util.logging.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -11,6 +12,7 @@ public class ApiBundleService implements BundleActivator, ServiceListener {
 	private final static Logger LOG = Logger.getLogger(ApiBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
+	private KernelServiceLocal kernel;
 
 	public ApiBundleService() {
 	}
@@ -18,13 +20,16 @@ public class ApiBundleService implements BundleActivator, ServiceListener {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
+		kernel = bundleContext.getService(bundleContext.getServiceReference(KernelServiceLocal.class));
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
+		kernel.registerBundle(bundleContext.getBundle());
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		kernel.unregisterBundle(context.getBundle());
 		context.removeServiceListener(this);
 	}
 

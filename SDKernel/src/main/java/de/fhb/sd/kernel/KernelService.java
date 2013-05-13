@@ -1,10 +1,17 @@
 package de.fhb.sd.kernel;
 
+import de.fhb.sd.api.kernel.KernelServiceLocal;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
+import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleEvent;
+import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.FrameworkEvent;
 import org.osgi.framework.FrameworkListener;
@@ -19,22 +26,31 @@ import org.osgi.framework.ServiceListener;
  */
 @Stateless
 @Startup
-public class KernelService implements BundleActivator, ServiceListener, BundleListener, FrameworkListener {
+public class KernelService implements KernelServiceLocal, BundleActivator, ServiceListener, BundleListener, FrameworkListener, Serializable {
 
 	private BundleContext bundleContext;
 	private String bundleName;
+	private List<Bundle> systemBundles;
+
+	public KernelService() {
+		systemBundles = new ArrayList<Bundle>();
+	}
 
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
+		this.registerBundle(bundleContext.getBundle());
 		bundleName = bundleContext.getBundle().getSymbolicName();
 		context.addFrameworkListener(this);
 		context.addBundleListener(this);
 		context.addServiceListener(this);
+		context.registerService(KernelServiceLocal.class.getName(), this, null);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		context.ungetService(context.getServiceReference(KernelServiceLocal.class.getName()));
+		this.unregisterBundle(bundleContext.getBundle());
 		context.removeServiceListener(this);
 		context.removeBundleListener(this);
 		context.removeFrameworkListener(this);
@@ -44,13 +60,14 @@ public class KernelService implements BundleActivator, ServiceListener, BundleLi
 	public void serviceChanged(ServiceEvent event) {
 
 		String[] objectClass = (String[]) event.getServiceReference().getProperty("objectClass");
+		String eventBundleName = event.getServiceReference().getBundle().getSymbolicName();
 
 		if (event.getType() == ServiceEvent.REGISTERED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
+			log("Service in Bundle " + eventBundleName + " of type " + objectClass[0] + " registered.");
 		} else if (event.getType() == ServiceEvent.UNREGISTERING) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
+			log("Service in Bundle " + eventBundleName + " of type " + objectClass[0] + " unregistered.");
 		} else if (event.getType() == ServiceEvent.MODIFIED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+			log("Service in Bundle " + eventBundleName + " of type " + objectClass[0] + " modified.");
 		}
 	}
 
@@ -107,5 +124,41 @@ public class KernelService implements BundleActivator, ServiceListener, BundleLi
 
 	private void log(String log) {
 		System.out.println(bundleName + ": " + log);
+	}
+
+	@Override
+	public List<Bundle> getAllBundels() {
+		return Arrays.asList(bundleContext.getBundles());
+	}
+
+	@Override
+	public List<Bundle> getBundels() {
+		return systemBundles;
+	}
+
+	@Override
+	public Bundle getBundle(String bundleName) {
+		return bundleContext.getBundle(bundleName);
+	}
+
+	@Override
+	public void startBundle(String bundleName) throws BundleException {
+		bundleContext.getBundle(bundleName).start();
+	}
+
+	@Override
+	public void stopBundle(String bundleName) throws BundleException {
+		bundleContext.getBundle(bundleName).stop();
+	}
+
+	@Override
+	public void registerBundle(Bundle bundle) {
+		systemBundles.add(bundle);
+	}
+
+	@Override
+	public void unregisterBundle(Bundle bundle) {
+		systemBundles.remove(bundle);
+		//TODO remove from system?
 	}
 }

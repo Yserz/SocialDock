@@ -39,11 +39,11 @@
 			<groupId>${project.groupId}</groupId>
 			<artifactId>SDAPI</artifactId>
 			<version>${project.version}</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
 			<artifactId>osgi-cdi-api</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax</groupId>
@@ -69,11 +69,6 @@
 						<!-- Specify elements to add to MANIFEST.MF -->
 						<Bundle-Activator>de.fhb.sd.web.WebBundleService</Bundle-Activator>
 						<Web-ContextPath>/SocialDock</Web-ContextPath>
-						<Import-Package>
-							javax.*,
-							com.vaadin.*,
-							org.osgi.*
-						</Import-Package>
 					</instructions>
 				</configuration>
 				<executions>
