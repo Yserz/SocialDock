@@ -18,6 +18,8 @@
 	</modules>
 
 	<properties>
+		<!-- define the glassfish autodeploy-folder here -->
+		<gf.autodeploy.path>/Applications/NetBeans/glassfish-3.1.2.2/glassfish/domains/domain1/autodeploy/bundles/</gf.autodeploy.path>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!-- OSGi -->
 		<osgi.version>4.3.1</osgi.version>
