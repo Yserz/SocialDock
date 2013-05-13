@@ -95,7 +95,7 @@
 						<Bundle-Activator>de.fhb.sd.web.WebBundleService</Bundle-Activator>
 						<Web-ContextPath>/SocialDock</Web-ContextPath>
 						<Import-Package>
-							<!--javax.*,-->
+							javax.*,
 							com.vaadin.*,
 							org.osgi.*
 						</Import-Package>
