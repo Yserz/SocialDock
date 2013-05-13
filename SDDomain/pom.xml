@@ -52,7 +52,7 @@
 						<supportedProjectType>jar</supportedProjectType>
 					</supportedProjectTypes>
 					<instructions>
-						<Bundle-Activator>de.fhb.sd.domain.Activator</Bundle-Activator>
+						<Bundle-Activator>de.fhb.sd.domain.DomainBundleService</Bundle-Activator>
 					</instructions>
 					<executions>
 						<execution>
