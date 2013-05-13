@@ -4,6 +4,7 @@
  */
 package de.fhb.sd.web;
 
+import com.vaadin.annotations.PreserveOnRefresh;
 import com.vaadin.annotations.Title;
 import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Item;
@@ -37,8 +38,9 @@ import org.osgi.framework.BundleEvent;
  *
  * @author MacYser
  */
-@Title("Hello Vaadin")
-public class HelloVaadinUI extends UI implements Serializable {
+@Title("SocialDock")
+@PreserveOnRefresh
+public class HelloVaadinUI extends UI {
 
 	@Inject
 	@OSGiService(dynamic = true)
@@ -74,6 +76,7 @@ public class HelloVaadinUI extends UI implements Serializable {
 	 */
 	@Override
 	protected void init(VaadinRequest request) {
+
 
 		SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
 		bundleList.addContainerProperty("Name", String.class, null);
