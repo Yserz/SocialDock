@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.welovecoding.base.repository;
+package de.fhb.sd.domain.repository;
 
 import java.util.List;
 import java.util.logging.Logger;

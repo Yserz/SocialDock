@@ -4,7 +4,6 @@
  */
 package de.fhb.sd.domain.entity;
 
-import com.welovecoding.base.entity.BaseEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
