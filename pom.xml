@@ -14,8 +14,8 @@
 		<module>SDWeb</module>
 		<module>SDAdminWeb</module>
 		<module>SDDomain</module>
-    <module>SDGoogle</module>
-  </modules>
+		<module>SDGoogle</module>
+	</modules>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -139,17 +139,20 @@
 				<groupId>org.osgi</groupId>
 				<artifactId>org.osgi.core</artifactId>
 				<version>${osgi.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.osgi</groupId>
 				<artifactId>org.osgi.compendium</artifactId>
 				<version>${osgi.version}</version>
+				<scope>provided</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.glassfish</groupId>
 				<artifactId>osgi-cdi-api</artifactId>
 				<version>3.1-b41</version>
 				<type>jar</type>
+				<scope>provided</scope>
 			</dependency>
 			<!-- Ui  -->
 			<dependency>
@@ -175,7 +178,7 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>org.osgi</groupId>

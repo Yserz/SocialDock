@@ -17,6 +17,7 @@
 package de.fhb.sd.google.service;
 
 import de.fhb.sd.api.google.GoogleLocal;
+import de.fhb.sd.api.kernel.KernelServiceLocal;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.Startup;
@@ -38,6 +39,7 @@ public class GoogleBundleService implements BundleActivator, ServiceListener {
 	private final static Logger LOG = Logger.getLogger(GoogleBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
+	private KernelServiceLocal kernel;
 
 	public GoogleBundleService() {
 	}
@@ -45,15 +47,18 @@ public class GoogleBundleService implements BundleActivator, ServiceListener {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
+		kernel = bundleContext.getService(bundleContext.getServiceReference(KernelServiceLocal.class));
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
+		kernel.registerBundle(bundleContext.getBundle());
 		context.registerService(GoogleLocal.class.getName(), new GoogleService(), null);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		context.ungetService(context.getServiceReference(GoogleLocal.class.getName()));
+		kernel.unregisterBundle(context.getBundle());
 		context.removeServiceListener(this);
 	}
 

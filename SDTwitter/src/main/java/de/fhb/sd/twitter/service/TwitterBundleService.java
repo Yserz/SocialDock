@@ -16,37 +16,15 @@
  */
 package de.fhb.sd.twitter.service;
 
+import de.fhb.sd.api.kernel.KernelServiceLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
-import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.twitter.domain.TwitterMessage;
-import java.util.Date;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import javax.ejb.EJB;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
-import org.osgi.framework.BundleEvent;
-import org.osgi.framework.BundleListener;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
-import twitter4j.DirectMessage;
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.TwitterBase;
-import twitter4j.TwitterException;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.User;
-import twitter4j.UserList;
-import twitter4j.UserStreamListener;
-import twitter4j.auth.AccessToken;
 
 /**
  * This Bean connects to Twitter and streams messages.
@@ -60,6 +38,7 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 	private final static Logger LOG = Logger.getLogger(TwitterBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
+	private KernelServiceLocal kernel;
 
 	public TwitterBundleService() {
 	}
@@ -67,15 +46,18 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
+		kernel = bundleContext.getService(bundleContext.getServiceReference(KernelServiceLocal.class));
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
+		kernel.registerBundle(bundleContext.getBundle());
 		context.registerService(TwitterLocal.class.getName(), new TwitterService(), null);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		context.ungetService(context.getServiceReference(TwitterLocal.class.getName()));
+		kernel.unregisterBundle(context.getBundle());
 		context.removeServiceListener(this);
 	}
 
