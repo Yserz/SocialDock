@@ -21,10 +21,43 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.osgi</groupId>
-			<artifactId>org.osgi.core</artifactId>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-server</artifactId>
+			<!--<scope>provided</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-themes</artifactId>
+			<!--<scope>provided</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiled</artifactId>
+			<!--<scope>provided</scope>-->
+		</dependency>
+		<!--		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client</artifactId>
+			<scope>provided</scope>
+		</dependency>-->
+		<!--		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-shared</artifactId>
+			<version>7.0.5</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-shared-deps</artifactId>
+			<version>1.0.2</version>
+			<scope>provided</scope>
+		</dependency>-->
+		<!--		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-theme-compiler</artifactId>
+			<version>7.0.5</version>
+			<scope>provided</scope>
+		</dependency>-->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>SDAPI</artifactId>
@@ -41,23 +74,7 @@
 			<version>6.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<!--		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-cdi</artifactId>
-			<version>1.0.0.alpha1</version>
-		</dependency>-->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-themes</artifactId>
-			<version>7.0.4</version>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-client-compiled</artifactId>
-			<version>7.0.4</version>
-			<scope>compile</scope>
-		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -65,7 +82,6 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.3.7</version>
 				<extensions>true</extensions>
 				<configuration>
 					<supportedProjectTypes>
@@ -76,15 +92,45 @@
 					</supportedProjectTypes>
 					<instructions>
 						<!-- Specify elements to add to MANIFEST.MF -->
-						<Bundle-Activator>de.fhb.sd.web.Activator</Bundle-Activator>
+						<Bundle-Activator>de.fhb.sd.web.WebBundleService</Bundle-Activator>
 						<Web-ContextPath>/SocialDock</Web-ContextPath>
-						<Export-Package>com.vaadin.*</Export-Package>
 						<Import-Package>
-							*
+							<!--javax.*,-->
+							com.vaadin.*,
+							org.osgi.*
 						</Import-Package>
+						<!--						<Embed-Dependency>*;scope=compile|runtime;inline=true</Embed-Dependency>
+						<Embed-Directory>target/dependency</Embed-Directory>
+						<Embed-StripGroup>true</Embed-StripGroup>
+						<Embed-Transitive>true</Embed-Transitive>
+						<Import-Package>
+							com.google.*;resolution:=optional,
+							javax.*
+						</Import-Package>-->
 
+
+
+
+
+						<!--<Import-Package>javax.*</Import-Package>-->
 						<!--						<Embed-Dependency>*</Embed-Dependency>
 						<Embed-Transitive>true</Embed-Transitive>-->
+						<!--<Import-Package>*</Import-Package>-->
+						<!--						<Import-Package>
+							com.vaadin.annotations;resolution:=optional,
+							com.vaadin.data;resolution:=optional,
+							com.vaadin.data.fieldgroup;resolution:=optional,
+							com.vaadin.data.util;resolution:=optional,
+							com.vaadin.event;resolution:=optional,
+							com.vaadin.server;resolution:=optional,
+							com.vaadin.ui;resolution:=optional,
+							javax.servlet;resolution:=optional,
+							javax.servlet.http;resolution:=optional,
+							*
+						</Import-Package>-->
+
+						<!--<Embed-Dependency>*</Embed-Dependency>-->
+
 						<!--<Embed-Dependency>*</Embed-Dependency>-->
 						<!--<Embed-Dependency>vaadin-cdi-1.0.0.alpha1.jar</Embed-Dependency>-->
 						<!--<Embed-Transitive>true</Embed-Transitive>-->
@@ -95,6 +141,19 @@
 					</instructions>
 				</configuration>
 				<executions>
+					<!--					<execution>
+						<id>wrap-dependency</id>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+						<configuration>
+							<instructions>
+								<Embed-Dependency>*</Embed-Dependency>
+								<Embed-Transitive>true</Embed-Transitive>
+								<Export-Package>*</Export-Package>
+							</instructions>
+						</configuration>
+					</execution>-->
 					<execution>
 						<id>bundle-manifest</id>
 						<phase>process-classes</phase>
@@ -116,8 +175,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>2.3.2</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<compilerArguments>
 						<endorseddirs>${endorsed.dir}</endorseddirs>
 					</compilerArguments>
