@@ -16,30 +16,16 @@
 		<module>SDDomain</module>
 	</modules>
 
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<!-- Runtime -->
-		<karaf.version>2.3.1</karaf.version>
 		<!-- OSGi -->
 		<osgi.version>4.3.1</osgi.version>
 		<osgi.ipojo.version>1.8.6</osgi.ipojo.version>
 		<ipojo.version>1.8.6</ipojo.version>
-
 		<!-- Vaadin/GWT -->
 		<vaadin.version>7.0.5</vaadin.version>
 		<gwt.version>2.3.0</gwt.version>
 		<vaadin.production>false</vaadin.production>
-
-		<!--  Google Guava -->
-		<google.guava.version>11.0.2</google.guava.version>
-		<google.guava.osgi.version>11_1</google.guava.osgi.version>
-
-		<!-- Apache Commons -->
-		<apache.commons.logging.version>1.1.1</apache.commons.logging.version>
-
-		<!-- servlet -->
-		<servlet.version>2.5</servlet.version>
 	</properties>
 
 	<repositories>
@@ -67,6 +53,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>vaadin-snapshots</id>
@@ -79,6 +66,7 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
+
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -95,7 +83,7 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.0</version>
+					<version>3.1</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -107,26 +95,6 @@
 					<artifactId>maven-resources-plugin</artifactId>
 					<version>2.6</version>
 				</plugin>
-				<plugin>
-					<groupId>org.apache.karaf.tooling</groupId>
-					<artifactId>features-maven-plugin</artifactId>
-					<version>${karaf.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>gwt-maven-plugin</artifactId>
-					<version>2.3.0</version>
-				</plugin>
-				<plugin>
-					<groupId>com.vaadin</groupId>
-					<artifactId>vaadin-maven-plugin</artifactId>
-					<version>${vaadin.version}</version>
-				</plugin>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>build-helper-maven-plugin</artifactId>
-					<version>1.7</version>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 
@@ -135,8 +103,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 					<encoding>${project.build.sourceEncoding}</encoding>
 					<optimize>true</optimize>
 				</configuration>
@@ -176,11 +144,6 @@
 				<artifactId>org.osgi.compendium</artifactId>
 				<version>${osgi.version}</version>
 			</dependency>
-			<!--			<dependency>
-				<groupId>org.apache.geronimo.specs</groupId>
-				<artifactId>geronimo-geronimo-servlet_2.5_spec</artifactId>
-				<version>${geronimo.servlet.version}</version>
-			</dependency>-->
 			<dependency>
 				<groupId>org.glassfish</groupId>
 				<artifactId>osgi-cdi-api</artifactId>
@@ -198,39 +161,20 @@
 				<artifactId>vaadin-client-compiled</artifactId>
 				<version>${vaadin.version}</version>
 			</dependency>
-			<!--			<dependency>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-client</artifactId>
-				<version>${vaadin.version}</version>
-			</dependency>-->
 			<dependency>
 				<groupId>com.vaadin</groupId>
 				<artifactId>vaadin-themes</artifactId>
 				<version>${vaadin.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.google.guava</groupId>
-				<artifactId>guava</artifactId>
-				<version>${google.guava.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.apache.servicemix.bundles</groupId>
-				<artifactId>org.apache.servicemix.bundles.guava</artifactId>
-				<version>${google.guava.osgi.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>javax.servlet</groupId>
-				<artifactId>servlet-api</artifactId>
-				<version>${servlet.version}</version>
-			</dependency>
-			<!-- Apache Commons -->
-			<dependency>
-				<groupId>commons-logging</groupId>
-				<artifactId>commons-logging</artifactId>
-				<version>${apache.commons.logging.version}</version>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>6.0</version>
+				<scope>provided</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
 	<dependencies>
 		<dependency>
 			<groupId>org.osgi</groupId>
