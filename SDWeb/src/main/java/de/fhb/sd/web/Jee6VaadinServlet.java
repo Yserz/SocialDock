@@ -14,7 +14,7 @@ import javax.servlet.annotation.WebServlet;
  *
  * @author MacYser
  */
-@WebServlet(urlPatterns = "/Test",
+@WebServlet(urlPatterns = "/*",
 		initParams = {
 	@WebInitParam(name = "UIProvider", value = "de.fhb.sd.web.Jee6UIProvider")})
 public class Jee6VaadinServlet extends VaadinServlet {
