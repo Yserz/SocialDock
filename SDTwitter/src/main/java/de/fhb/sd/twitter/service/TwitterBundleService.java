@@ -50,14 +50,12 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		kernel.registerBundle(bundleContext.getBundle());
 		context.registerService(TwitterLocal.class.getName(), new TwitterService(), null);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		context.ungetService(context.getServiceReference(TwitterLocal.class.getName()));
-		kernel.unregisterBundle(context.getBundle());
 		context.removeServiceListener(this);
 	}
 

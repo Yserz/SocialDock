@@ -24,12 +24,10 @@ public class DomainBundleService implements BundleActivator, ServiceListener {
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		kernel.registerBundle(bundleContext.getBundle());
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		kernel.unregisterBundle(context.getBundle());
 		context.removeServiceListener(this);
 	}
 

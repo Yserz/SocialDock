@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import org.osgi.framework.Bundle;
@@ -30,16 +31,15 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 
 	private BundleContext bundleContext;
 	private String bundleName;
-	private List<Bundle> systemBundles;
+	private BundleRegistry bundleRegistry;
 
 	public KernelService() {
-		systemBundles = new ArrayList<Bundle>();
 	}
 
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
-		this.registerBundle(bundleContext.getBundle());
+		bundleRegistry = new BundleRegistry(context);
 		bundleName = bundleContext.getBundle().getSymbolicName();
 		context.addFrameworkListener(this);
 		context.addBundleListener(this);
@@ -50,7 +50,6 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		context.ungetService(context.getServiceReference(KernelServiceLocal.class.getName()));
-		this.unregisterBundle(bundleContext.getBundle());
 		context.removeServiceListener(this);
 		context.removeBundleListener(this);
 		context.removeFrameworkListener(this);
@@ -101,8 +100,10 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 
 		if (event.getType() == BundleEvent.INSTALLED) {
 			log(eventBundleName + " Installed");
+			registerBundle(event.getBundle());
 		} else if (event.getType() == BundleEvent.UNINSTALLED) {
 			log(eventBundleName + " Uninstalled");
+			unregisterBundle(event.getBundle());
 		} else if (event.getType() == BundleEvent.STARTING) {
 			log(eventBundleName + " Starting");
 		} else if (event.getType() == BundleEvent.STARTED) {
@@ -133,7 +134,7 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 
 	@Override
 	public List<Bundle> getBundels() {
-		return systemBundles;
+		return bundleRegistry.getBundles();
 	}
 
 	@Override
@@ -142,23 +143,22 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 	}
 
 	@Override
-	public void startBundle(String bundleName) throws BundleException {
-		bundleContext.getBundle(bundleName).start();
+	public void startBundle(Bundle bundle) throws BundleException {
+		bundle.start();
 	}
 
 	@Override
-	public void stopBundle(String bundleName) throws BundleException {
-		bundleContext.getBundle(bundleName).stop();
+	public void stopBundle(Bundle bundle) throws BundleException {
+		bundle.stop();
 	}
 
 	@Override
 	public void registerBundle(Bundle bundle) {
-		systemBundles.add(bundle);
+		bundleRegistry.registerBundle(bundle);
 	}
 
 	@Override
 	public void unregisterBundle(Bundle bundle) {
-		systemBundles.remove(bundle);
-		//TODO remove from system?
+		bundleRegistry.unregisterBundle(bundle);
 	}
 }
