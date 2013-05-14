@@ -22,9 +22,9 @@ public interface KernelServiceLocal {
 
 	Bundle getBundle(String bundleName);
 
-	void startBundle(String bundleName) throws BundleException;
+	void startBundle(Bundle bundle) throws BundleException;
 
-	void stopBundle(String bundleName) throws BundleException;
+	void stopBundle(Bundle bundle) throws BundleException;
 
 	void registerBundle(Bundle bundle);
 

@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fhb.sd.adminweb.vaadin;
+package de.fhb.sd.adminweb.adapter;
 
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
  */
 @WebServlet(urlPatterns = "/*",
 		initParams = {
-	@WebInitParam(name = "UIProvider", value = "de.fhb.sd.adminweb.vaadin.Jee6UIProvider")})
+	@WebInitParam(name = "UIProvider", value = "de.fhb.sd.adminweb.adapter.Jee6UIProvider")})
 public class Jee6VaadinServlet extends VaadinServlet {
 
 	@Inject

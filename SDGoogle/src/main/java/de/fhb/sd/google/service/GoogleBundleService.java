@@ -32,8 +32,6 @@ import org.osgi.framework.ServiceListener;
  *
  * @author Michael Koppen <michael.koppen@googlemail.com>
  */
-@Stateless
-@Startup
 public class GoogleBundleService implements BundleActivator, ServiceListener {
 
 	private final static Logger LOG = Logger.getLogger(GoogleBundleService.class.getName());
@@ -51,14 +49,12 @@ public class GoogleBundleService implements BundleActivator, ServiceListener {
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		kernel.registerBundle(bundleContext.getBundle());
 		context.registerService(GoogleLocal.class.getName(), new GoogleService(), null);
 	}
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
 		context.ungetService(context.getServiceReference(GoogleLocal.class.getName()));
-		kernel.unregisterBundle(context.getBundle());
 		context.removeServiceListener(this);
 	}
 
