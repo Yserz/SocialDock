@@ -16,11 +16,8 @@
  */
 package de.fhb.sd.twitter.service;
 
-import de.fhb.sd.api.kernel.KernelServiceLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import java.util.logging.Logger;
-import javax.ejb.Startup;
-import javax.ejb.Stateless;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceEvent;
@@ -31,14 +28,11 @@ import org.osgi.framework.ServiceListener;
  *
  * @author Michael Koppen <michael.koppen@googlemail.com>
  */
-@Stateless
-@Startup
 public class TwitterBundleService implements BundleActivator, ServiceListener {
 
 	private final static Logger LOG = Logger.getLogger(TwitterBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
-	private KernelServiceLocal kernel;
 
 	public TwitterBundleService() {
 	}
@@ -46,7 +40,6 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
-		kernel = bundleContext.getService(bundleContext.getServiceReference(KernelServiceLocal.class));
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
