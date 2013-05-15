@@ -14,6 +14,8 @@ import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
+import de.fhb.sd.adminweb.ui.aboutview.AboutView;
+import de.fhb.sd.adminweb.ui.allbundles.AllBundlesView;
 import de.fhb.sd.adminweb.ui.mainview.component.AdminTree;
 import de.fhb.sd.adminweb.ui.mainview.component.BundleTableWithDetails;
 import de.fhb.sd.adminweb.ui.mainview.MainView;
@@ -31,11 +33,15 @@ import org.glassfish.osgicdi.OSGiService;
 public class SDAdminWebUI extends UI {
 
 	public final String MAIN = "";
+	public final String ABOUT = "about";
+	public final String ALL = "all";
 	@Inject
 	@OSGiService(dynamic = false)
 	private KernelServiceLocal kernel;
 	private Navigator nav = new Navigator(this, this);
 	private MainView mainView;
+	private AllBundlesView allBundlesView;
+	private AboutView aboutView;
 
 	/*
 	 * After UI class is created, init() is executed. You should build and wire
@@ -45,6 +51,13 @@ public class SDAdminWebUI extends UI {
 	protected void init(final VaadinRequest request) {
 		mainView = new MainView(kernel);
 		nav.addView(MAIN, mainView);
+
+		allBundlesView = new AllBundlesView(kernel);
+		nav.addView(ALL, allBundlesView);
+
+		aboutView = new AboutView();
+		nav.addView(ABOUT, aboutView);
+
 		navTo(MAIN);
 	}
 

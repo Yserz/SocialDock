@@ -2,14 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fhb.sd.adminweb.ui.mainview.component;
+package de.fhb.sd.adminweb.ui.allbundles.component;
 
 import com.vaadin.data.Property;
-import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
@@ -20,16 +17,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleException;
 
 /**
  *
  * @author MacYser
  */
-public class BundleTableWithDetails extends CustomComponent {
+public class AllBundleTableWithDetails extends CustomComponent {
 
 	private KernelServiceLocal kernel;
 	private Bundle selectedBundle;
@@ -39,7 +33,7 @@ public class BundleTableWithDetails extends CustomComponent {
 	private final SimpleDateFormat sdf = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss Z");
 	private Map<Integer, String> mapBundleStatus;
 
-	public BundleTableWithDetails(final KernelServiceLocal kernel) {
+	public AllBundleTableWithDetails(final KernelServiceLocal kernel) {
 		super();
 		this.kernel = kernel;
 
@@ -63,7 +57,7 @@ public class BundleTableWithDetails extends CustomComponent {
 
 		detail = new DetailPanel();
 		table = new BundleTable(kernel);
-		table.markAsDirtyRecursive();
+//		table.markAsDirtyRecursive();
 		new Thread(table).start();
 		content.addComponent(table);
 
@@ -143,7 +137,7 @@ public class BundleTableWithDetails extends CustomComponent {
 
 		private void addData() {
 			removeAllItems();
-			for (Bundle bundle : kernel.getBundels()) {
+			for (Bundle bundle : kernel.getAllBundels()) {
 				String[] bundleAtt = new String[]{
 					bundle.getSymbolicName(),
 					"[" + bundle.getBundleId() + "]",
@@ -168,7 +162,7 @@ public class BundleTableWithDetails extends CustomComponent {
 
 			while (loop) {
 				try {
-					Thread.sleep(10000);
+					Thread.sleep(30000);
 					//update the data in table
 					updateTable();
 
@@ -176,12 +170,9 @@ public class BundleTableWithDetails extends CustomComponent {
 //					markAsDirtyRecursive();
 					refreshRowCache();
 //					refreshRenderedCells();
-				} catch (InterruptedException e) {
+				} catch (InterruptedException | IllegalStateException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
-					loop = false;
-				} catch (IllegalStateException ise) {
-					ise.printStackTrace();
+					System.out.println(e.getMessage());
 					loop = false;
 				}
 			}
@@ -192,7 +183,7 @@ public class BundleTableWithDetails extends CustomComponent {
 	private class DetailPanel extends CustomComponent {
 
 		private VerticalLayout vertical = new VerticalLayout();
-		private HorizontalLayout buttonLine = new HorizontalLayout();
+//		private HorizontalLayout buttonLine = new HorizontalLayout();
 
 		public DetailPanel() {
 			super();
@@ -205,58 +196,58 @@ public class BundleTableWithDetails extends CustomComponent {
 
 		private void init() {
 
-			Button toggleActive = new Button("Aktivieren");
-			if (selectedBundle != null) {
-				switch (mapBundleStatus.get(selectedBundle.getState())) {
-					case "RESOLVED":
-						toggleActive.setCaption("Deaktivieren");
-						toggleActive.addClickListener(new Button.ClickListener() {
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								try {
-									kernel.stopBundle(selectedBundle);
-								} catch (BundleException ex) {
-									Logger.getLogger(BundleTableWithDetails.class.getName()).log(Level.SEVERE, null, ex);
-								}
-							}
-						});
-						break;
-					case "STARTED":
-						toggleActive.setCaption("Aktivieren");
-						toggleActive.addClickListener(new Button.ClickListener() {
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								try {
-									kernel.startBundle(selectedBundle);
-								} catch (BundleException ex) {
-									Logger.getLogger(BundleTableWithDetails.class.getName()).log(Level.SEVERE, null, ex);
-								}
-							}
-						});
-						break;
-					case "UPDATED":
-						toggleActive.setCaption("Aktivieren");
-						toggleActive.addClickListener(new Button.ClickListener() {
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								try {
-									kernel.startBundle(selectedBundle);
-								} catch (BundleException ex) {
-									Logger.getLogger(BundleTableWithDetails.class.getName()).log(Level.SEVERE, null, ex);
-								}
-							}
-						});
-						break;
-					default:
-						toggleActive.setCaption(" - ");
-						toggleActive.setEnabled(false);
-						break;
-				}
-			}
-
-			buttonLine.addComponent(toggleActive);
-
-			vertical.addComponent(buttonLine);
+//			Button toggleActive = new Button("Aktivieren");
+//			if (selectedBundle != null) {
+//				switch (mapBundleStatus.get(selectedBundle.getState())) {
+//					case "RESOLVED":
+//						toggleActive.setCaption("Deaktivieren");
+//						toggleActive.addClickListener(new Button.ClickListener() {
+//							@Override
+//							public void buttonClick(Button.ClickEvent event) {
+//								try {
+//									kernel.stopBundle(selectedBundle);
+//								} catch (BundleException ex) {
+//									Logger.getLogger(BundleTableWithDetails.class.getName()).log(Level.SEVERE, null, ex);
+//								}
+//							}
+//						});
+//						break;
+//					case "STARTED":
+//						toggleActive.setCaption("Aktivieren");
+//						toggleActive.addClickListener(new Button.ClickListener() {
+//							@Override
+//							public void buttonClick(Button.ClickEvent event) {
+//								try {
+//									kernel.startBundle(selectedBundle);
+//								} catch (BundleException ex) {
+//									Logger.getLogger(BundleTableWithDetails.class.getName()).log(Level.SEVERE, null, ex);
+//								}
+//							}
+//						});
+//						break;
+//					case "UPDATED":
+//						toggleActive.setCaption("Aktivieren");
+//						toggleActive.addClickListener(new Button.ClickListener() {
+//							@Override
+//							public void buttonClick(Button.ClickEvent event) {
+//								try {
+//									kernel.startBundle(selectedBundle);
+//								} catch (BundleException ex) {
+//									Logger.getLogger(BundleTableWithDetails.class.getName()).log(Level.SEVERE, null, ex);
+//								}
+//							}
+//						});
+//						break;
+//					default:
+//						toggleActive.setCaption(" - ");
+//						toggleActive.setEnabled(false);
+//						break;
+//				}
+//			}
+//
+//			buttonLine.addComponent(toggleActive);
+//
+//			vertical.addComponent(buttonLine);
 
 			GridLayout infoGrid = new GridLayout(2, 4);
 			infoGrid.setMargin(true);
