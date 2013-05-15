@@ -17,6 +17,7 @@
 package de.fhb.sd.twitter.service;
 
 import de.fhb.sd.api.twitter.TwitterLocal;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -67,6 +68,6 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 	}
 
 	private void log(String log) {
-		System.out.println(bundleName + ": " + log);
+		LOG.log(Level.INFO, "{0}: {1}", new Object[]{bundleName, log});
 	}
 }

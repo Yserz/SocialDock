@@ -87,7 +87,7 @@
 						<!-- Specify elements to add to MANIFEST.MF -->
 						<Bundle-Activator>de.fhb.sd.adminweb.AdminWebBundleService</Bundle-Activator>
 						<Web-ContextPath>/SocialDockAdmin</Web-ContextPath>
-
+						<Export-Package>!*</Export-Package>
 					</instructions>
 				</configuration>
 				<executions>
