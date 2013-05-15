@@ -26,6 +26,7 @@ public class BundleRegistry {
 		"SDAdminWeb",
 		"SDWeb",
 		"SDGoogle",
+		"SDNewYorkTimes",
 		"SDTwitter"
 	};
 
