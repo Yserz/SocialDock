@@ -16,7 +16,7 @@ import javax.servlet.annotation.WebServlet;
  */
 @WebServlet(urlPatterns = "/*",
 		initParams = {
-	@WebInitParam(name = "UIProvider", value = "de.fhb.sd.adminweb.adapter.Jee6UIProvider")})
+	@WebInitParam(name = "UIProvider", value = "de.fhb.sd.adminweb.adapter.Jee6UIProvider")}, asyncSupported = true)
 public class Jee6VaadinServlet extends VaadinServlet {
 
 	@Inject

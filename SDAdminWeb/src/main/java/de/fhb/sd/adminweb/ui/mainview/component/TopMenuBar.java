@@ -4,7 +4,6 @@
  */
 package de.fhb.sd.adminweb.ui.mainview.component;
 
-import com.vaadin.navigator.Navigator;
 import com.vaadin.ui.MenuBar;
 import de.fhb.sd.adminweb.ui.SDAdminWebUI;
 
@@ -14,29 +13,47 @@ import de.fhb.sd.adminweb.ui.SDAdminWebUI;
  */
 public class TopMenuBar extends MenuBar {
 
-	private Command test;
-	private SDAdminWebUI ui;
+	private Command main;
+	private Command allBundles;
+	private Command about;
 
 	public TopMenuBar() {
 		super();
-		this.ui = (SDAdminWebUI) getUI();
 		init();
 	}
 
 	private void init() {
 		setSizeFull();
-
-
 		addItems();
 	}
 
 	private void addItems() {
-		test = new MenuBar.Command() {
+		main = new MenuBar.Command() {
 			@Override
 			public void menuSelected(MenuBar.MenuItem selectedItem) {
-				ui.navTo(ui.MAIN);
+				getMyUI().navTo(getMyUI().MAIN);
 			}
 		};
-		addItem("test", test);
+		addItem("MyBundles", main);
+
+		allBundles = new MenuBar.Command() {
+			@Override
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				getMyUI().navTo(getMyUI().ALL);
+			}
+		};
+		addItem("AllBundles", allBundles);
+
+		about = new MenuBar.Command() {
+			@Override
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				getMyUI().navTo(getMyUI().ABOUT);
+			}
+		};
+		addItem("About", about);
+	}
+
+	private SDAdminWebUI getMyUI() {
+		return (SDAdminWebUI) getUI();
 	}
 }
