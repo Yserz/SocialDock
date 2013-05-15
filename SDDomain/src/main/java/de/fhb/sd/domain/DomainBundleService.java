@@ -1,6 +1,5 @@
 package de.fhb.sd.domain;
 
-import de.fhb.sd.api.kernel.KernelServiceLocal;
 import java.util.logging.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -12,7 +11,6 @@ public class DomainBundleService implements BundleActivator, ServiceListener {
 	private final static Logger LOG = Logger.getLogger(DomainBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
-	private KernelServiceLocal kernel;
 
 	public DomainBundleService() {
 	}
@@ -20,7 +18,6 @@ public class DomainBundleService implements BundleActivator, ServiceListener {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
-		kernel = bundleContext.getService(bundleContext.getServiceReference(KernelServiceLocal.class));
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
