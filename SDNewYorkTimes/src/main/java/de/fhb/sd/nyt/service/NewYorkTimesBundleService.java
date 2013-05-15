@@ -18,7 +18,6 @@ package de.fhb.sd.nyt.service;
 
 import java.util.logging.Logger;
 
-import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
 import org.osgi.framework.BundleActivator;
@@ -26,7 +25,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 
-import de.fhb.sd.api.kernel.KernelServiceLocal;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 
 /**
@@ -35,13 +33,11 @@ import de.fhb.sd.api.nyt.NewYorkTimesLocal;
  * @author Christoph Ott
  */
 @Stateless
-@Startup
 public class NewYorkTimesBundleService implements BundleActivator, ServiceListener {
 
 	private final static Logger LOG = Logger.getLogger(NewYorkTimesBundleService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
-	private KernelServiceLocal kernel;
 
 	public NewYorkTimesBundleService() {
 	}
@@ -49,7 +45,6 @@ public class NewYorkTimesBundleService implements BundleActivator, ServiceListen
 	@Override
 	public void start(BundleContext context) throws Exception {
 		this.bundleContext = context;
-		kernel = bundleContext.getService(bundleContext.getServiceReference(KernelServiceLocal.class));
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
