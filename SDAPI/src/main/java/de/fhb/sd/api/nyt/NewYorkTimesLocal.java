@@ -16,5 +16,7 @@ public interface NewYorkTimesLocal {
 	void start();
 
 	void stop();
+	
+	String getMostPopular();
 
 }

@@ -22,6 +22,11 @@ import javax.ejb.Startup;
 import javax.ejb.Stateless;
 
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
+import de.fhb.sd.nyt.api.MostPopularQuery;
+import de.fhb.sd.nyt.api.MostPopularSearch;
+import de.fhb.sd.nyt.api.NYTAPIKey;
+import de.fhb.sd.nyt.api.ResourceType;
+import de.fhb.sd.nyt.api.TimePeriod;
 
 /**
  * This Bean gets articles from the NewYorkTimes.
@@ -43,6 +48,15 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 
 	@Override
 	public void stop() {
+	}
+
+	@Override
+	public String getMostPopular() {
+		String apiKey = "cfe88cd84c026683a2a1f8fb156b9709:6:67675712";
+		MostPopularQuery mostPopularQuery = new MostPopularQuery(
+				ResourceType.MOSTVIEWED, TimePeriod.THIRTY);
+		MostPopularSearch mps = new MostPopularSearch(new NYTAPIKey(apiKey));
+		return mps.search(mostPopularQuery);
 	}
 
 }
