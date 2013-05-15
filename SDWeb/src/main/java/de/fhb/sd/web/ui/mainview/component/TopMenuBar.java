@@ -5,6 +5,8 @@
 package de.fhb.sd.web.ui.mainview.component;
 
 import com.vaadin.ui.MenuBar;
+import com.vaadin.ui.MenuBar.MenuItem;
+
 import de.fhb.sd.web.SDWebUI;
 
 /**
@@ -14,7 +16,7 @@ import de.fhb.sd.web.SDWebUI;
 public class TopMenuBar extends MenuBar {
 
 	private Command main;
-	private Command allBundles;
+	private Command nyt;
 	private Command about;
 
 	public TopMenuBar() {
@@ -36,6 +38,14 @@ public class TopMenuBar extends MenuBar {
 		};
 		addItem("SocialDock", main);
 
+		nyt = new MenuBar.Command() {
+			
+			@Override
+			public void menuSelected(MenuItem selectedItem) {
+				getMyUI().navTo(getMyUI().NYT);
+			}
+		};
+		addItem("NewYorkTimes", nyt);
 
 		about = new MenuBar.Command() {
 			@Override

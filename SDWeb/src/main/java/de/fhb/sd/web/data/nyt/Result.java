@@ -1,4 +1,4 @@
-package de.fhb.sd.nyt.data;
+package de.fhb.sd.web.data.nyt;
 
 import com.google.gson.annotations.SerializedName;
 

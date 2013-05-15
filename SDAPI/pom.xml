@@ -61,7 +61,7 @@
 					</supportedProjectTypes>
 					<instructions>
 						<Bundle-Activator>de.fhb.sd.api.ApiBundleService</Bundle-Activator>
-						<Export-Package>de.fhb.sd.api.google,de.fhb.sd.api.kernel,de.fhb.sd.api.twitter</Export-Package>
+						<Export-Package>de.fhb.sd.api.google,de.fhb.sd.api.kernel,de.fhb.sd.api.twitter,de.fhb.sd.api.nyt</Export-Package>
 						<Private-Package>de.fhb.sd.api.*</Private-Package>
 					</instructions>
 					<executions>

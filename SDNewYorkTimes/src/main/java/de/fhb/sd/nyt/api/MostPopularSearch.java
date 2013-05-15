@@ -17,10 +17,6 @@ package de.fhb.sd.nyt.api;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.google.gson.Gson;
-
-import de.fhb.sd.nyt.data.MostPopular;
-
 /**
  * 
  * http://api.nytimes.com/svc/mostpopular/{version}/{resource-type}/{section}[/
@@ -40,7 +36,11 @@ public class MostPopularSearch {
 		this.key = key;
 	}
 
-	public MostPopular search(MostPopularQuery query) {
+	/**
+	 * @param query
+	 * @return a json
+	 */
+	public String search(MostPopularQuery query) {
 		this.query = query;
 		StringBuilder queryURL = new StringBuilder();
 		queryURL.append(BASE_URI);
@@ -50,9 +50,7 @@ public class MostPopularSearch {
 		queryURL.append("/" + query.getTimePeriod().toString());
 		queryURL.append("/" + "?api-key=" + key.getKey());
 		try {
-			String json = HttpRequest.request(new URL(queryURL.toString()));
-			Gson gson = new Gson();
-			return gson.fromJson(json, MostPopular.class);
+			return HttpRequest.request(new URL(queryURL.toString()));
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
