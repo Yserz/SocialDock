@@ -2,19 +2,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fhb.sd.adminweb.ui.mainview;
+package de.fhb.sd.web.ui.mainview;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.adminweb.ui.SDAdminWebUI;
-import de.fhb.sd.adminweb.ui.mainview.component.AdminTree;
-import de.fhb.sd.adminweb.ui.mainview.component.BundleTableWithDetails;
-import de.fhb.sd.adminweb.ui.mainview.component.TopMenuBar;
-import de.fhb.sd.api.kernel.KernelServiceLocal;
+import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
+import de.fhb.sd.api.twitter.TwitterLocal;
 
 /**
  *
@@ -22,24 +19,20 @@ import de.fhb.sd.api.kernel.KernelServiceLocal;
  */
 public class MainView extends CustomComponent implements View {
 
-	private KernelServiceLocal kernel;
+	private TwitterLocal twitter;
 	/* define Layout objects */
-	private HorizontalSplitPanel horizontal = new HorizontalSplitPanel();
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
-	private BundleTableWithDetails content;
+	private Label content;
 	private TopMenuBar topMenuBar;
-	private AdminTree adminTree;
 
-	public MainView(final KernelServiceLocal kernel) {
+	public MainView(final TwitterLocal twitter) {
 		super();
-		this.kernel = kernel;
+		this.twitter = twitter;
 
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
 		vertical.setLocked(true);
-		horizontal.setSizeFull();
-		horizontal.setSplitPosition(20, Unit.PERCENTAGE);
 
 		fillLayout();
 
@@ -49,14 +42,11 @@ public class MainView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-		adminTree = new AdminTree();
-		content = new BundleTableWithDetails(kernel);
+		content = new Label("Messages");
 
 		vertical.addComponent(topMenuBar);
-		vertical.addComponent(horizontal);
+		vertical.addComponent(content);
 
-		horizontal.addComponent(adminTree);
-		horizontal.addComponent(content);
 	}
 
 	@Override

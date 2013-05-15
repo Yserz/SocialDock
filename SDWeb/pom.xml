@@ -88,6 +88,7 @@
 						<!-- Specify elements to add to MANIFEST.MF -->
 						<Bundle-Activator>de.fhb.sd.web.WebBundleService</Bundle-Activator>
 						<Web-ContextPath>/SocialDock</Web-ContextPath>
+						<Export-Package>!*</Export-Package>
 					</instructions>
 				</configuration>
 				<executions>

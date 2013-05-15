@@ -51,9 +51,6 @@ public class BundleRegistry {
 				bundles.add(bundleContext.getBundle(bundle.getValue()));
 			}
 		}
-//		for (Map.Entry<String, Long> entry : bundleRegistry.entrySet()) {
-//			System.out.println("Key: " + entry.getKey() + " Value: " + entry.getValue());
-//		}
 		return bundles;
 	}
 
@@ -67,10 +64,8 @@ public class BundleRegistry {
 				bundleRegistry.put(bundleName, bundleId);
 				ret = true;
 			} else {
-				System.out.println("Bundle ist bereits in der BundleRegistry registriert.");
+				log("Bundle ist bereits in der BundleRegistry registriert.");
 			}
-		} else {
-			System.out.println("Bundle ist nicht in der BundleRegistry.");
 		}
 		return ret;
 	}
@@ -85,11 +80,32 @@ public class BundleRegistry {
 				bundleRegistry.put(bundleName, -1L);
 				ret = true;
 			} else {
-				System.out.println("BundleID stimmt nicht mit ID in der BundleRegistry überein.");
+				log("BundleID stimmt nicht mit ID in der BundleRegistry überein.");
 			}
 		} else {
-			System.out.println("Bundle ist nicht in der BundleRegistry.");
+			log("Bundle ist nicht in der BundleRegistry.");
 		}
 		return ret;
+	}
+
+	public int countBundles() {
+		int count = 0;
+		for (Map.Entry<String, Long> bundle : bundleRegistry.entrySet()) {
+			if (bundle.getValue() > 0) {
+				count++;
+			}
+		}
+		log(count + "/" + bundleNames.length + " Bundles are registered.");
+		return count;
+	}
+
+	public int countAllBundles() {
+		int count = bundleContext.getBundles().length;
+		log(count + " Bundles are registered.");
+		return count;
+	}
+
+	private void log(String log) {
+		System.out.println(bundleContext.getBundle().getSymbolicName() + ": " + log);
 	}
 }

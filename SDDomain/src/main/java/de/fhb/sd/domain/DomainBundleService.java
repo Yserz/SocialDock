@@ -1,5 +1,6 @@
 package de.fhb.sd.domain;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -43,6 +44,6 @@ public class DomainBundleService implements BundleActivator, ServiceListener {
 	}
 
 	private void log(String log) {
-		System.out.println(bundleName + ": " + log);
+		LOG.log(Level.INFO, "{0}: {1}", new Object[]{bundleName, log});
 	}
 }

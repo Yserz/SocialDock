@@ -66,6 +66,8 @@
 					</supportedProjectTypes>
 					<instructions>
 						<Bundle-Activator>de.fhb.sd.domain.DomainBundleService</Bundle-Activator>
+						<Export-Package>de.fhb.sd.domain.entity</Export-Package>
+						<Private-Package>de.fhb.sd.domain.*</Private-Package>
 					</instructions>
 					<executions>
 						<execution>

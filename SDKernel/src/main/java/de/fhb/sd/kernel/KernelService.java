@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import org.osgi.framework.Bundle;
@@ -26,9 +28,9 @@ import org.osgi.framework.ServiceListener;
  *
  */
 @Stateless
-@Startup
 public class KernelService implements KernelServiceLocal, BundleActivator, ServiceListener, BundleListener, FrameworkListener, Serializable {
 
+	private final static Logger LOG = Logger.getLogger(KernelService.class.getName());
 	private BundleContext bundleContext;
 	private String bundleName;
 	private BundleRegistry bundleRegistry;
@@ -124,7 +126,7 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 	}
 
 	private void log(String log) {
-		System.out.println(bundleName + ": " + log);
+		LOG.log(Level.INFO, "{0}: {1}", new Object[]{bundleName, log});
 	}
 
 	@Override

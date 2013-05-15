@@ -17,7 +17,9 @@
 package de.fhb.sd.google.service;
 
 import de.fhb.sd.api.google.GoogleLocal;
+import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.Stateless;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceEvent;
@@ -28,6 +30,7 @@ import org.osgi.framework.ServiceListener;
  *
  * @author Michael Koppen <michael.koppen@googlemail.com>
  */
+@Stateless
 public class GoogleBundleService implements BundleActivator, ServiceListener {
 
 	private final static Logger LOG = Logger.getLogger(GoogleBundleService.class.getName());
@@ -67,6 +70,6 @@ public class GoogleBundleService implements BundleActivator, ServiceListener {
 	}
 
 	private void log(String log) {
-		System.out.println(bundleName + ": " + log);
+		LOG.log(Level.INFO, "{0}: {1}", new Object[]{bundleName, log});
 	}
 }
