@@ -109,7 +109,7 @@
 						<supportedProjectType>jar</supportedProjectType>
 					</supportedProjectTypes>
 					<instructions>
-						<Export-Package>de.fhb.sd.nyt.service,twitter4j.*</Export-Package>
+						<Export-Package>de.fhb.sd.nyt.service,de.fhb.sd.nyt.api,twitter4j.*</Export-Package>
 						<Bundle-Activator>de.fhb.sd.nyt.service.NewYorkTimesBundleService</Bundle-Activator>
 						<Import-Package>
 							org.apache.commons.logging;resolution:=optional,
