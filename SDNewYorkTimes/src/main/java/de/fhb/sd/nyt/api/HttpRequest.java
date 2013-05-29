@@ -22,17 +22,17 @@ import java.net.URLConnection;
 public class HttpRequest {
 
 	public static String request(URL url) {
-		StringBuffer stringBuffer = new StringBuffer();
+		StringBuilder stringBuilder = new StringBuilder();
 		String result = null;
 		try {
 			URLConnection connection = url.openConnection();
 			BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 			String line;
 			while ((line = rd.readLine()) != null) {
-				stringBuffer.append(line);
+				stringBuilder.append(line);
 			}
 			rd.close();
-			result = stringBuffer.toString();
+			result = stringBuilder.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
