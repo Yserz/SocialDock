@@ -16,12 +16,20 @@
  */
 package de.fhb.sd.nyt.service;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
+import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.nyt.api.*;
+import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
+import de.fhb.sd.nyt.util.MostPopular;
+import de.fhb.sd.nyt.util.Result;
 
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -35,7 +43,7 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 
 	private final static Logger LOG = Logger.getLogger(NewYorkTimesService.class.getName());
 	private Date date = new Date();
-	private String mostPopularJSON;
+	private List<Message> messageList;
 
 	public NewYorkTimesService() {
 	}
@@ -49,18 +57,26 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 	}
 
 	@Override
-	public String getMostPopular() {
+	public List<Message> getMostPopular() {
 		LOG.info("Executing: getMostPopular()");
-		if (mostPopularJSON != null && (new Date().getTime() - date.getTime()) < 300000) {
-			return mostPopularJSON;
+		if (messageList != null && (new Date().getTime() - date.getTime()) < 300000) {
+			return messageList;
 		}
-
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-mm-dd").create();
+		MostPopular mostPopular;
 		String apiKey = "cfe88cd84c026683a2a1f8fb156b9709:6:67675712";
 		MostPopularQuery mostPopularQuery = new MostPopularQuery(
 				ResourceType.MOSTVIEWED, TimePeriod.THIRTY);
 		MostPopularSearch mps = new MostPopularSearch(new NYTAPIKey(apiKey));
-		mostPopularJSON = mps.search(mostPopularQuery);
+		mostPopular = gson.fromJson(mps.search(mostPopularQuery), MostPopular.class);
+
+		messageList = new ArrayList<Message>();
+		for (Result result : mostPopular.results) {
+			Message message = new NewYorkTimesMessage();
+			message.setMessage(result.isAbstract);
+			messageList.add(message);
+		}
 		date = new Date();
-		return mostPopularJSON;
+		return messageList;
 	}
 }

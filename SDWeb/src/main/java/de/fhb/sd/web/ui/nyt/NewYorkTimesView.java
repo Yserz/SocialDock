@@ -12,9 +12,10 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
-import de.fhb.sd.web.data.nyt.MostPopular;
-import de.fhb.sd.web.data.nyt.Result;
+import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
+
+import java.util.List;
 
 /**
  * @author MacYser
@@ -46,15 +47,13 @@ public class NewYorkTimesView extends CustomComponent implements View {
 		topMenuBar = new TopMenuBar();
 
 		Gson gson = new Gson();
-		MostPopular mp = gson.fromJson(nyt.getMostPopular(), MostPopular.class);
+		List<Message> messages = nyt.getMostPopular();
 		newsTable = new Table("NewYorkTmes Articles");
 
-		newsTable.addContainerProperty("Title", String.class, null);
-		newsTable.addContainerProperty("Section", String.class, null);
 		newsTable.addContainerProperty("Abstract", String.class, null);
-		for (Result r : mp.results) {
+		for (Message message : messages) {
 			newsTable.addItem(
-					new String[]{r.title, r.section, r.isAbstract}, r);
+					new String[]{message.getMessage()}, message);
 		}
 
 		vertical.addComponent(topMenuBar);
