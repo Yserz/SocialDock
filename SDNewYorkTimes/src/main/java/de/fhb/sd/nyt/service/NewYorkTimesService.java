@@ -58,7 +58,7 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 
 	@Override
 	public List<Message> getMessages() {
-		LOG.info("Executing: getMessages()");
+//		LOG.info("Executing: getMessages()");
 		if (messageList != null && (new Date().getTime() - date.getTime()) < 300000) {
 			return messageList;
 		}

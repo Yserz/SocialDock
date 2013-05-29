@@ -7,7 +7,7 @@ package de.fhb.sd.web.ui.mainview.component;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.MenuBar.MenuItem;
 
-import de.fhb.sd.web.SDWebUI;
+import de.fhb.sd.web.WebBundleService;
 
 /**
  *
@@ -73,7 +73,7 @@ public class TopMenuBar extends MenuBar {
 		addItem("About", about);
 	}
 
-	private SDWebUI getMyUI() {
-		return (SDWebUI) getUI();
+	private WebBundleService getMyUI() {
+		return (WebBundleService) getUI();
 	}
 }

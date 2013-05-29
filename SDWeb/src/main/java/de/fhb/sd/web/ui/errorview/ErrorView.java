@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fhb.sd.web.ui.twitterview;
+package de.fhb.sd.web.ui.errorview;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -11,26 +11,38 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
-import de.fhb.sd.api.twitter.TwitterLocal;
-import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
-import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
 
 /**
  *
  * @author MacYser
  */
-public class TwitterView extends CustomComponent implements View {
+public class ErrorView extends CustomComponent implements View {
 
-	private TwitterLocal twitter;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
-	private TwitterMessageTableWithDetails content;
+	private Label content;
 	private TopMenuBar topMenuBar;
+	private String stringError;
 
-	public TwitterView(final TwitterLocal twitter) {
+	public ErrorView(String error) {
 		super();
-		this.twitter = twitter;
+		stringError = error;
+
+		vertical.setSizeFull();
+		vertical.setSplitPosition(3, Unit.PERCENTAGE);
+		vertical.setLocked(true);
+
+		fillLayout();
+
+		setCompositionRoot(vertical);
+		setSizeFull();
+	}
+
+	public ErrorView(Exception error) {
+		super();
+		//TODO seperate string from exception
+		stringError = error.getMessage();
 
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
@@ -44,9 +56,10 @@ public class TwitterView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-		content = new TwitterMessageTableWithDetails(twitter);
 
+		content = new Label(stringError);
 		vertical.addComponent(topMenuBar);
+
 		vertical.addComponent(content);
 
 	}
