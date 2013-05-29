@@ -45,7 +45,7 @@ public class BundleTableWithDetails extends CustomComponent {
 
 
 
-		mapBundleStatus = new HashMap<Integer, String>(10);
+		mapBundleStatus = new HashMap<>(10);
 		mapBundleStatus.put(1, "INSTALLED");
 		mapBundleStatus.put(2, "STARTED");
 		mapBundleStatus.put(3, "STOPPED");
@@ -172,16 +172,9 @@ public class BundleTableWithDetails extends CustomComponent {
 					//update the data in table
 					updateTable();
 
-//					markAsDirty();
-//					markAsDirtyRecursive();
 					refreshRowCache();
-//					refreshRenderedCells();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					loop = false;
-				} catch (IllegalStateException ise) {
-					ise.printStackTrace();
+				} catch (InterruptedException | IllegalStateException e) {
+					System.out.println(e.getMessage());
 					loop = false;
 				}
 			}

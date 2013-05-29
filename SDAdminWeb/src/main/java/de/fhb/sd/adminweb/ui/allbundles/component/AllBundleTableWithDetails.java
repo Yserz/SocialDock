@@ -166,10 +166,7 @@ public class AllBundleTableWithDetails extends CustomComponent {
 					//update the data in table
 					updateTable();
 
-//					markAsDirty();
-//					markAsDirtyRecursive();
 					refreshRowCache();
-//					refreshRenderedCells();
 				} catch (InterruptedException | IllegalStateException e) {
 					// TODO Auto-generated catch block
 					System.out.println(e.getMessage());
