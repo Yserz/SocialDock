@@ -19,6 +19,6 @@ public interface NewYorkTimesLocal {
 
 	void stop();
 
-	List<Message> getMostPopular();
+	List<Message> getMessages();
 
 }

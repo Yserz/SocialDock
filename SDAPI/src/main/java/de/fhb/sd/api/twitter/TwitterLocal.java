@@ -4,6 +4,8 @@
  */
 package de.fhb.sd.api.twitter;
 
+import de.fhb.sd.domain.entity.Message;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,6 +18,8 @@ public interface TwitterLocal {
 	void start();
 
 	void stop();
+
+	List<Message> getMessages();
 
 	String hello();
 

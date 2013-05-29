@@ -10,8 +10,10 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
+import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.api.twitter.TwitterLocal;
+import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
 
 /**
  *
@@ -20,15 +22,17 @@ import de.fhb.sd.api.twitter.TwitterLocal;
 public class MainView extends CustomComponent implements View {
 
 	private TwitterLocal twitter;
+	private NewYorkTimesLocal nyt;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
-	private Label content;
+	private MessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
 
-	public MainView(final TwitterLocal twitter) {
+	public MainView(final TwitterLocal twitter, final NewYorkTimesLocal nyt) {
 		super();
 		this.twitter = twitter;
+		this.nyt = nyt;
 
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
@@ -42,7 +46,7 @@ public class MainView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-		content = new Label("Messages");
+		content = new MessageTableWithDetails(twitter, nyt);
 
 		vertical.addComponent(topMenuBar);
 		vertical.addComponent(content);
