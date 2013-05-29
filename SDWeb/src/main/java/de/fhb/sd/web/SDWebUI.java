@@ -16,9 +16,13 @@ import de.fhb.sd.web.ui.aboutview.AboutView;
 import de.fhb.sd.web.ui.mainview.MainView;
 import de.fhb.sd.web.ui.nyt.NewYorkTimesView;
 import de.fhb.sd.web.ui.twitterview.TwitterView;
+import de.fhb.sd.web.ui.welcomeview.WelcomeView;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import org.glassfish.osgicdi.OSGiService;
+import org.glassfish.osgicdi.ServiceUnavailableException;
 
 /**
  *
@@ -28,21 +32,24 @@ import org.glassfish.osgicdi.OSGiService;
 @PreserveOnRefresh
 public class SDWebUI extends UI {
 
-	public final String MAIN = "";
+	private static final Logger LOG = Logger.getLogger(SDWebUI.class.getName());
+	public final String HOME = "";
+	public final String ALL = "all";
 	public final String TWITTER = "twitter";
 	public final String NYT = "nyt";
 	public final String ABOUT = "about";
 	@Inject
-	@OSGiService(dynamic = false)
+	@OSGiService(dynamic = true)
 	private TwitterLocal twitter;
 	@Inject
-	@OSGiService(dynamic = false)
+	@OSGiService(dynamic = true)
 	private NewYorkTimesLocal nyt;
 	private Navigator nav = new Navigator(this, this);
 	private MainView mainView;
 	private TwitterView twitterView;
 	private NewYorkTimesView nytView;
 	private AboutView aboutView;
+	private WelcomeView homeView;
 
 	/*
 	 * After UI class is created, init() is executed. You should build and wire
@@ -50,20 +57,37 @@ public class SDWebUI extends UI {
 	 */
 	@Override
 	protected void init(final VaadinRequest request) {
-		twitter.start();
-		mainView = new MainView(twitter, nyt);
-		nav.addView(MAIN, mainView);
+		homeView = new WelcomeView();
+		nav.addView(HOME, homeView);
 
-		twitterView = new TwitterView(twitter);
-		nav.addView(TWITTER, twitterView);
-
-		nytView = new NewYorkTimesView(nyt);
-		nav.addView(NYT, nytView);
+		try {
+			twitter.start();
+		} catch (ServiceUnavailableException e) {
+			LOG.log(Level.INFO, "ServiceUnavailableException: Twitter-Bundle unavailable.");
+		}
+		try {
+			mainView = new MainView(twitter, nyt);
+			nav.addView(ALL, mainView);
+		} catch (ServiceUnavailableException e) {
+			LOG.log(Level.INFO, "ServiceUnavailableException: Twitter- or NYT-Bundle unavailable.");
+		}
+		try {
+			twitterView = new TwitterView(twitter);
+			nav.addView(TWITTER, twitterView);
+		} catch (ServiceUnavailableException e) {
+			LOG.log(Level.INFO, "ServiceUnavailableException: Twitter-Bundle unavailable.");
+		}
+		try {
+			nytView = new NewYorkTimesView(nyt);
+			nav.addView(NYT, nytView);
+		} catch (ServiceUnavailableException e) {
+			LOG.log(Level.INFO, "ServiceUnavailableException: NYT-Bundle unavailable.");
+		}
 
 		aboutView = new AboutView();
 		nav.addView(ABOUT, aboutView);
 
-		navTo(MAIN);
+		navTo(HOME);
 	}
 
 	public void navTo(String to) {

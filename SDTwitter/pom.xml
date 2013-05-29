@@ -88,15 +88,21 @@
 						<supportedProjectType>jar</supportedProjectType>
 					</supportedProjectTypes>
 					<instructions>
-						<Export-Package>de.fhb.sd.twitter.service, !twitter4j.*</Export-Package>
 						<Bundle-Activator>de.fhb.sd.twitter.service.TwitterBundleService</Bundle-Activator>
+						<Export-Package>
+							de.fhb.sd.twitter.service
+						</Export-Package>
 						<Import-Package>
 							org.apache.commons.logging;resolution:=optional,
 							org.apache.log4j;resolution:=optional,
 							org.slf4j;resolution:=optional,
 							*
 						</Import-Package>
-						<Private-Package>de.fhb.sd.twitter.domain.*, de.fhb.sd.twitter.repository.*</Private-Package>
+						<Private-Package>
+							de.fhb.sd.twitter.domain.*,
+							de.fhb.sd.twitter.repository.*,
+							twitter4j.*
+						</Private-Package>
 					</instructions>
 					<executions>
 						<execution>

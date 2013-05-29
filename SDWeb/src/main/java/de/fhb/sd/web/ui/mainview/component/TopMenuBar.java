@@ -15,7 +15,8 @@ import de.fhb.sd.web.SDWebUI;
  */
 public class TopMenuBar extends MenuBar {
 
-	private Command main;
+	private Command home;
+	private Command all;
 	private Command twitter;
 	private Command nyt;
 	private Command about;
@@ -31,13 +32,21 @@ public class TopMenuBar extends MenuBar {
 	}
 
 	private void addItems() {
-		main = new MenuBar.Command() {
+		home = new MenuBar.Command() {
 			@Override
 			public void menuSelected(MenuBar.MenuItem selectedItem) {
-				getMyUI().navTo(getMyUI().MAIN);
+				getMyUI().navTo(getMyUI().HOME);
 			}
 		};
-		addItem("SocialDock", main);
+		addItem("Home", home);
+
+		all = new MenuBar.Command() {
+			@Override
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				getMyUI().navTo(getMyUI().ALL);
+			}
+		};
+		addItem("SocialDock", all);
 
 		twitter = new MenuBar.Command() {
 			@Override
