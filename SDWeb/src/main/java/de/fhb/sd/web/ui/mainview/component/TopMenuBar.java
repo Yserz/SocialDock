@@ -16,6 +16,7 @@ import de.fhb.sd.web.SDWebUI;
 public class TopMenuBar extends MenuBar {
 
 	private Command main;
+	private Command twitter;
 	private Command nyt;
 	private Command about;
 
@@ -38,8 +39,15 @@ public class TopMenuBar extends MenuBar {
 		};
 		addItem("SocialDock", main);
 
+		twitter = new MenuBar.Command() {
+			@Override
+			public void menuSelected(MenuBar.MenuItem selectedItem) {
+				getMyUI().navTo(getMyUI().TWITTER);
+			}
+		};
+		addItem("Twitter", twitter);
+
 		nyt = new MenuBar.Command() {
-			
 			@Override
 			public void menuSelected(MenuItem selectedItem) {
 				getMyUI().navTo(getMyUI().NYT);

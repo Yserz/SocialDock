@@ -19,7 +19,9 @@ package de.fhb.sd.twitter.service;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.twitter.domain.TwitterMessage;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PreDestroy;
@@ -55,6 +57,7 @@ public class TwitterService implements TwitterLocal {
 	private final String token = "403358935-CXqlVYe8nKLBm9buxU55vES9HSBdgG5fbCLfOo";
 	private final String tokenSecret = "2W6d3aNWLYTLcxWCsXDoBesDsiJADh7B0iWxERa9AnU";
 	private TwitterStream twitterStream;
+	private List<Message> messages;
 
 	public TwitterService() {
 		twitterStream = new TwitterStreamFactory().getInstance();
@@ -62,6 +65,7 @@ public class TwitterService implements TwitterLocal {
 		twitterStream.setOAuthConsumer(consumerKey, consumerKeySecure);
 		twitterStream.setOAuthAccessToken(givenAccessToken);
 
+		messages = new ArrayList<>();
 		twitterStream.addListener(new BaseUserStreamListener());
 	}
 
@@ -80,6 +84,11 @@ public class TwitterService implements TwitterLocal {
 	@PreDestroy
 	public void stop() {
 		twitterStream.shutdown();
+	}
+
+	@Override
+	public List<Message> getMessages() {
+		return messages;
 	}
 
 	private class BaseUserStreamListener implements UserStreamListener {
@@ -176,7 +185,7 @@ public class TwitterService implements TwitterLocal {
 			message.setAuthor(status.getText());
 			message.setMessage(status.getText());
 
-			//TODO Push data (maybe websockets or jms)
+			messages.add(message);
 		}
 
 		@Override

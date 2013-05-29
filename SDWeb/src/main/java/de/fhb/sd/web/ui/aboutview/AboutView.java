@@ -7,11 +7,9 @@ package de.fhb.sd.web.ui.aboutview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.web.ui.mainview.component.AdminTree;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 
 /**

@@ -15,6 +15,7 @@ import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.web.ui.aboutview.AboutView;
 import de.fhb.sd.web.ui.mainview.MainView;
 import de.fhb.sd.web.ui.nyt.NewYorkTimesView;
+import de.fhb.sd.web.ui.twitterview.TwitterView;
 
 import javax.inject.Inject;
 import org.glassfish.osgicdi.OSGiService;
@@ -28,7 +29,8 @@ import org.glassfish.osgicdi.OSGiService;
 public class SDWebUI extends UI {
 
 	public final String MAIN = "";
-	public final String NYT = "NewYorkTimes";
+	public final String TWITTER = "twitter";
+	public final String NYT = "nyt";
 	public final String ABOUT = "about";
 	@Inject
 	@OSGiService(dynamic = false)
@@ -38,6 +40,7 @@ public class SDWebUI extends UI {
 	private NewYorkTimesLocal nyt;
 	private Navigator nav = new Navigator(this, this);
 	private MainView mainView;
+	private TwitterView twitterView;
 	private NewYorkTimesView nytView;
 	private AboutView aboutView;
 
@@ -48,8 +51,11 @@ public class SDWebUI extends UI {
 	@Override
 	protected void init(final VaadinRequest request) {
 		twitter.start();
-		mainView = new MainView(twitter);
+		mainView = new MainView(twitter, nyt);
 		nav.addView(MAIN, mainView);
+
+		twitterView = new TwitterView(twitter);
+		nav.addView(TWITTER, twitterView);
 
 		nytView = new NewYorkTimesView(nyt);
 		nav.addView(NYT, nytView);
