@@ -19,6 +19,9 @@ package de.fhb.sd.twitter.service;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.inject.Inject;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceEvent;
@@ -45,6 +48,7 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 
 		context.addServiceListener(this);
 		context.registerService(TwitterLocal.class.getName(), new TwitterService(), null);
+
 	}
 
 	@Override
