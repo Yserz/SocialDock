@@ -9,7 +9,7 @@ public class NewYorkTimesServiceTest {
 	public void testGetMostPopular() throws Exception {
 		NewYorkTimesService service = new NewYorkTimesService();
 		for (Message m : service.getMessages()) {
-			System.out.println(m);
+			System.out.println(m.getMessage());
 		}
 	}
 }
