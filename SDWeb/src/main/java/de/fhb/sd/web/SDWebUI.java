@@ -47,9 +47,10 @@ public class SDWebUI extends UI {
 	 */
 	@Override
 	protected void init(final VaadinRequest request) {
+		twitter.start();
 		mainView = new MainView(twitter);
 		nav.addView(MAIN, mainView);
-		
+
 		nytView = new NewYorkTimesView(nyt);
 		nav.addView(NYT, nytView);
 

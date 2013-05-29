@@ -22,6 +22,8 @@ import de.fhb.sd.twitter.domain.TwitterMessage;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PreDestroy;
+import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import twitter4j.DirectMessage;
@@ -69,10 +71,13 @@ public class TwitterService implements TwitterLocal {
 
 	@Override
 	public void start() {
-		twitterStream.sample();
+		LOG.log(Level.INFO, "###########################################################");
+//		twitterStream.sample();
+		twitterStream.user();
 	}
 
 	@Override
+	@PreDestroy
 	public void stop() {
 		twitterStream.shutdown();
 	}
