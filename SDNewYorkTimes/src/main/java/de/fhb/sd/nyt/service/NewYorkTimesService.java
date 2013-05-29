@@ -16,17 +16,13 @@
  */
 package de.fhb.sd.nyt.service;
 
-import java.util.logging.Logger;
+import de.fhb.sd.api.nyt.NewYorkTimesLocal;
+import de.fhb.sd.nyt.api.*;
 
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
-
-import de.fhb.sd.api.nyt.NewYorkTimesLocal;
-import de.fhb.sd.nyt.api.MostPopularQuery;
-import de.fhb.sd.nyt.api.MostPopularSearch;
-import de.fhb.sd.nyt.api.NYTAPIKey;
-import de.fhb.sd.nyt.api.ResourceType;
-import de.fhb.sd.nyt.api.TimePeriod;
+import java.util.Date;
+import java.util.logging.Logger;
 
 /**
  * This Bean gets articles from the NewYorkTimes.
@@ -38,6 +34,8 @@ import de.fhb.sd.nyt.api.TimePeriod;
 public class NewYorkTimesService implements NewYorkTimesLocal {
 
 	private final static Logger LOG = Logger.getLogger(NewYorkTimesService.class.getName());
+	private Date date = new Date();
+	private String mostPopularJSON;
 
 	public NewYorkTimesService() {
 	}
@@ -52,11 +50,17 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 
 	@Override
 	public String getMostPopular() {
+		LOG.info("Executing: getMostPopular()");
+		if (mostPopularJSON != null && (new Date().getTime() - date.getTime()) < 300000) {
+			return mostPopularJSON;
+		}
+
 		String apiKey = "cfe88cd84c026683a2a1f8fb156b9709:6:67675712";
 		MostPopularQuery mostPopularQuery = new MostPopularQuery(
 				ResourceType.MOSTVIEWED, TimePeriod.THIRTY);
 		MostPopularSearch mps = new MostPopularSearch(new NYTAPIKey(apiKey));
-		return mps.search(mostPopularQuery);
+		mostPopularJSON = mps.search(mostPopularQuery);
+		date = new Date();
+		return mostPopularJSON;
 	}
-
 }
