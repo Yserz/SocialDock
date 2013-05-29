@@ -1,12 +1,15 @@
 package de.fhb.sd.nyt.service;
 
+import de.fhb.sd.domain.entity.Message;
 import org.junit.Test;
 
 
 public class NewYorkTimesServiceTest {
 	@Test
 	public void testGetMostPopular() throws Exception {
-		NewYorkTimesService servie = new NewYorkTimesService();
-		System.out.println(servie.getMostPopular().get(1).getMessage());
+		NewYorkTimesService service = new NewYorkTimesService();
+		for (Message m : service.getMessages()) {
+			System.out.println(m);
+		}
 	}
 }
