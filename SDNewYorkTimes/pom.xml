@@ -37,17 +37,6 @@
 			<artifactId>org.apache.servicemix.bundles.twitter4j</artifactId>
 			<version>3.0.3_1</version>
 		</dependency>
-		<!--		<dependency>
-			<groupId>org.twitter4j</groupId>
-			<artifactId>twitter4j-core</artifactId>
-			<version>3.0.3</version>
-		</dependency>
-		<dependency>
-			<groupId>org.twitter4j</groupId>
-			<artifactId>twitter4j-stream</artifactId>
-			<version>3.0.3</version>
-			<type>jar</type>
-		</dependency>-->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
 			<artifactId>SDAPI</artifactId>
@@ -109,7 +98,7 @@
 						<supportedProjectType>jar</supportedProjectType>
 					</supportedProjectTypes>
 					<instructions>
-						<Export-Package>de.fhb.sd.nyt.service, de.fhb.sd.nyt.api,twitter4j.*</Export-Package>
+						<Export-Package>de.fhb.sd.nyt.service, , !de.fhb.sd.domain, !twitter4j</Export-Package>
 						<Bundle-Activator>de.fhb.sd.nyt.service.NewYorkTimesBundleService</Bundle-Activator>
 						<Import-Package>
 							org.apache.commons.logging;resolution:=optional,
@@ -117,7 +106,7 @@
 							org.slf4j;resolution:=optional,
 							*
 						</Import-Package>
-						<Private-Package>de.fhb.sd.nyt.util.*, de.fhb.sd.nyt.domain.*, de.fhb.sd.nyt.service.*</Private-Package>
+						<Private-Package>de.fhb.sd.nyt.util.*, de.fhb.sd.nyt.domain.*, de.fhb.sd.nyt.api.*</Private-Package>
 					</instructions>
 					<executions>
 						<execution>
