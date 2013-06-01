@@ -5,7 +5,6 @@
 package de.fhb.sd.web.ui.mainview.component;
 
 import com.vaadin.ui.CustomComponent;
-import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
 
 /**
@@ -14,11 +13,11 @@ import de.fhb.sd.api.twitter.TwitterLocal;
  */
 public class MessageTableWithDetails extends CustomComponent {
 
-	private MessageTable table;
+	private MainMessageTable table;
 
-	public MessageTableWithDetails(final TwitterLocal twitter, final NewYorkTimesLocal nyt) {
+	public MessageTableWithDetails(final TwitterLocal twitter, final de.fhb.sd.api.nyt.NewYorkTimesLocal nyt) {
 		super();
-		table = new MessageTable(twitter, nyt);
+		table = new MainMessageTable(twitter, nyt);
 		new Thread(table).start();
 		setSizeFull();
 		setCompositionRoot(table);

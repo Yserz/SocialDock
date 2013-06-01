@@ -2,41 +2,21 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fhb.sd.web.ui.twitterview.component;
+package de.fhb.sd.web.ui.util;
 
 import com.vaadin.data.Property;
-import com.vaadin.server.Sizeable;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.api.twitter.TwitterLocal;
+import com.vaadin.ui.*;
 import de.fhb.sd.domain.entity.Message;
-import java.util.ArrayList;
-import java.util.List;
-import javax.enterprise.context.spi.CreationalContext;
-import javax.enterprise.inject.spi.Bean;
-import javax.enterprise.inject.spi.BeanManager;
-import javax.inject.Inject;
-import javax.inject.Named;
-import org.glassfish.osgicdi.OSGiService;
 
-public class MessageTable extends CustomComponent implements Runnable {
+abstract public class MessageTable extends CustomComponent implements Runnable {
 
-	private TwitterLocal twitter;
-	private final String[] fieldNames = new String[]{"Author", "Message"};
-	private Message selectedMessage;
-	private DetailPanel detail;
-	private Table messageTable;
-	private VerticalSplitPanel content = new VerticalSplitPanel();
+	protected Message selectedMessage;
+	protected DetailPanel detail;
+	protected Table messageTable;
+	protected VerticalSplitPanel content = new VerticalSplitPanel();
 
-	public MessageTable(final TwitterLocal twitter) {
+	protected MessageTable() {
 		super();
-		this.twitter = twitter;
 		messageTable = new Table();
 		detail = new DetailPanel();
 		content.setSizeFull();
@@ -47,13 +27,12 @@ public class MessageTable extends CustomComponent implements Runnable {
 		messageTable.markAsDirtyRecursive();
 
 		init();
-
 	}
+
 
 	public void updateTable() {
 		addData();
 		messageTable.refreshRowCache();
-//		messageTable.refreshRenderedCells();
 	}
 
 	public void updateDetailPanel() {
@@ -63,13 +42,12 @@ public class MessageTable extends CustomComponent implements Runnable {
 	}
 
 	private void init() {
-		addHeader();
-//			twitter.start();
-		addData();
-
+		for (String field : addHeader()){
+			messageTable.addContainerProperty(field, String.class, "");
+		}
 		messageTable.setSelectable(true);
 		messageTable.setImmediate(true);
-		setHeight(100, Sizeable.Unit.PERCENTAGE);
+		setHeight(100, Unit.PERCENTAGE);
 
 		messageTable.addValueChangeListener(new Property.ValueChangeListener() {
 			@Override
@@ -79,28 +57,11 @@ public class MessageTable extends CustomComponent implements Runnable {
 				updateDetailPanel();
 			}
 		});
-		twitter.start();
 	}
 
-	private void addHeader() {
-		for (String field : fieldNames) {
-			messageTable.addContainerProperty(field, String.class, "");
-		}
-	}
+	abstract protected void addData();
 
-	private void addData() {
-		messageTable.removeAllItems();
-
-		List<Message> allMessages = new ArrayList<>(twitter.getMessages());
-		for (Message message : allMessages) {
-			String[] messageAtt = new String[]{
-				message.getAuthor(),
-				message.getMessage()
-			};
-
-			messageTable.addItem(messageAtt, message);
-		}
-	}
+	abstract protected String[] addHeader();
 
 	@Override
 	public void run() {

@@ -7,12 +7,10 @@ package de.fhb.sd.web.ui.twitterview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.api.twitter.TwitterLocal;
-import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
+import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
 
 /**
