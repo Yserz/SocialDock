@@ -6,9 +6,6 @@ package de.fhb.sd.web.ui.twitterview.component;
 
 import com.vaadin.ui.CustomComponent;
 import de.fhb.sd.api.twitter.TwitterLocal;
-import javax.inject.Inject;
-import javax.inject.Named;
-import org.glassfish.osgicdi.OSGiService;
 
 /**
  *
@@ -16,11 +13,11 @@ import org.glassfish.osgicdi.OSGiService;
  */
 public class TwitterMessageTableWithDetails extends CustomComponent {
 
-	private MessageTable table;
+	private TwitterMessageTable table;
 
 	public TwitterMessageTableWithDetails(final TwitterLocal twitter) {
 		super();
-		table = new MessageTable(twitter);
+		table = new TwitterMessageTable(twitter);
 		new Thread(table).start();
 		setSizeFull();
 		setCompositionRoot(table);

@@ -4,30 +4,27 @@
  */
 package de.fhb.sd.web.ui.nyt;
 
-import com.google.gson.Gson;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
-import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
-
-import java.util.List;
+import de.fhb.sd.web.ui.nyt.component.NYTMessageTableWithDetails;
+import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
 
 /**
  * @author MacYser
  */
 public class NewYorkTimesView extends CustomComponent implements View {
 
+	private NewYorkTimesLocal nyt;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
+	private NYTMessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
-	private NewYorkTimesLocal nyt;
-	private Table newsTable;
 
 	public NewYorkTimesView(final NewYorkTimesLocal nyt) {
 		super();
@@ -45,18 +42,10 @@ public class NewYorkTimesView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-
-		List<Message> messages = nyt.getMessages();
-		newsTable = new Table("NewYorkTmes Articles");
-
-		newsTable.addContainerProperty("Abstract", String.class, null);
-		for (Message message : messages) {
-			newsTable.addItem(
-					new String[]{message.getMessage()}, message);
-		}
+		content = new NYTMessageTableWithDetails(nyt);
 
 		vertical.addComponent(topMenuBar);
-		vertical.addComponent(newsTable);
+		vertical.addComponent(content);
 
 	}
 

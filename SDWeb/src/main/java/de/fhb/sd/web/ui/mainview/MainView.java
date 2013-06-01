@@ -7,12 +7,10 @@ package de.fhb.sd.web.ui.mainview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.api.nyt.NewYorkTimesLocal;
-import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.api.twitter.TwitterLocal;
+import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
 
 /**
@@ -22,14 +20,14 @@ import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
 public class MainView extends CustomComponent implements View {
 
 	private TwitterLocal twitter;
-	private NewYorkTimesLocal nyt;
+	private de.fhb.sd.api.nyt.NewYorkTimesLocal nyt;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
 	private MessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
 
-	public MainView(final TwitterLocal twitter, final NewYorkTimesLocal nyt) {
+	public MainView(final TwitterLocal twitter, final de.fhb.sd.api.nyt.NewYorkTimesLocal nyt) {
 		super();
 		this.twitter = twitter;
 		this.nyt = nyt;
