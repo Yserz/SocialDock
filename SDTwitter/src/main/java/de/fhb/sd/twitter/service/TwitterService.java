@@ -182,6 +182,7 @@ public class TwitterService implements TwitterLocal {
 				status});
 
 			Message message = new TwitterMessage();
+			message.setId(status.getId());
 			message.setAuthor(status.getText());
 			message.setMessage(status.getText());
 
