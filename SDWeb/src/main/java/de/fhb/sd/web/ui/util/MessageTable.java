@@ -11,7 +11,7 @@ import de.fhb.sd.domain.entity.Message;
 abstract public class MessageTable extends CustomComponent implements Runnable {
 
 	protected Message selectedMessage;
-	private DetailPanel detail;
+	protected DetailPanel detail;
 	protected Table messageTable;
 	protected VerticalSplitPanel content = new VerticalSplitPanel();
 
@@ -29,6 +29,7 @@ abstract public class MessageTable extends CustomComponent implements Runnable {
 		init();
 	}
 
+
 	public void updateTable() {
 		addData();
 		messageTable.refreshRowCache();
@@ -41,7 +42,7 @@ abstract public class MessageTable extends CustomComponent implements Runnable {
 	}
 
 	private void init() {
-		for (String field : addHeader()) {
+		for (String field : addHeader()){
 			messageTable.addContainerProperty(field, String.class, "");
 		}
 		messageTable.setSelectable(true);
