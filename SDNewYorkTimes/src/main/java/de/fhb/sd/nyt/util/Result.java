@@ -8,6 +8,7 @@ public class Result {
 	public String section;
 	public String title;
 	public Date published_date;
+	public String byline;
 	@SerializedName("abstract")
 	public String isAbstract;
 }
