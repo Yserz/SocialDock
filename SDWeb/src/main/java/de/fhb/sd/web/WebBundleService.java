@@ -37,21 +37,9 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 	public final String TWITTER = "twitter";
 	public final String NYT = "nyt";
 	public final String ABOUT = "about";
-//	@Inject
-//	@OSGiService(dynamic = true)
-	public TwitterLocal twitter;
-//	@Inject
-//	@OSGiService(dynamic = true)
-	public NewYorkTimesLocal nyt;
-	@Inject
-	@OSGiService(dynamic = false)
-	private KernelServiceLocal kernel;
+	private static TwitterLocal twitter;
+	private static NewYorkTimesLocal nyt;
 	private Navigator nav = new Navigator(this, this);
-	private MainView mainView;
-	private TwitterView twitterView;
-	private NewYorkTimesView nytView;
-	private AboutView aboutView;
-	private WelcomeView homeView;
 
 	/*
 	 * After UI class is created, init() is executed. You should build and wire
@@ -60,23 +48,18 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 	@Override
 	protected void init(final VaadinRequest request) {
 		nav.setErrorView(new ErrorView("Service Unavailable"));
-//		homeView = new WelcomeView();
 		nav.addView(HOME, WelcomeView.class);
 
 		nav.addView(TWITTER, TwitterView.class);
 		nav.addView(NYT, NewYorkTimesView.class);
 		nav.addView(ALL, MainView.class);
-//		registerTwitterService();
-//		registerNYTService();
 
-//		aboutView = new AboutView();
 		nav.addView(ABOUT, AboutView.class);
 
 		navTo(HOME);
 	}
 
 	public void navTo(String to) {
-		log("Navigating to: " + to);
 		nav.navigateTo(to);
 	}
 
@@ -86,6 +69,8 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
+		registerTwitterService();
+		registerNYTService();
 	}
 
 	@Override
@@ -128,8 +113,6 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 		} catch (NullPointerException | ServiceUnavailableException e) {
 			log("ServiceUnavailableException: Twitter- or NYT-Bundle unavailable.");
 		}
-		nav.removeView(TWITTER);
-		nav.removeView(ALL);
 	}
 
 	private void unregisterNYTService() {
@@ -139,17 +122,10 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 		} catch (NullPointerException | ServiceUnavailableException e) {
 			log("ServiceUnavailableException: Twitter- or NYT-Bundle unavailable.");
 		}
-		nav.removeView(NYT);
-		nav.removeView(ALL);
 	}
 
 	private void registerTwitterService() {
-//		try {
-//		System.out.println("Location: " + bundleContext.getBundle().getLocation());
-//
-//		while (kernel.getBundle("SDTwitter").getState() != BundleEvent.STARTED) {
-//			LOG.log(Level.INFO, "Bundle SDTwitter not started yet...");
-//		}
+		log("Registering TwitterService");
 		ServiceReference twitterRef = bundleContext.getServiceReference(TwitterLocal.class.getName());
 		if (twitterRef == null) {
 			log("TwitterRef == null");
@@ -158,34 +134,22 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 		if (twitter == null) {
 			log("twitterService == null");
 		}
-//		} catch (NullPointerException | ServiceUnavailableException e) {
-//			LOG.log(Level.INFO, "ServiceUnavailableException: Twitter-Bundle unavailable.");
-//		}
-//		nav.removeView(TWITTER);
-//		twitterView = new TwitterView(twitter);
-//		nav.addView(TWITTER, twitterView);
-//		registerMainView();
 	}
 
 	private void registerNYTService() {
+		log("Registering NYTService");
 		try {
-//			while (kernel.getBundle("SDNewYorkTimes").getState() != BundleEvent.STARTED) {
-//			}
 			nyt = (NewYorkTimesLocal) bundleContext.getService(bundleContext.getServiceReference(NewYorkTimesLocal.class.getName()));
 		} catch (NullPointerException | ServiceUnavailableException e) {
 			log("ServiceUnavailableException: NYT-Bundle unavailable.");
 		}
-//		nytView = new NewYorkTimesView(nyt);
-//		nav.addView(NYT, nytView);
-//		registerMainView();
 	}
-//	private void registerMainView() {
-//		nav.removeView(ALL);
-//		if (twitter != null && nyt != null) {
-//			mainView = new MainView(twitter, nyt);
-//			nav.addView(ALL, mainView);
-//		} else {
-//			log("ServiceUnavailableException: Twitter- or NYT-Bundle unavailable. Cant init MainView");
-//		}
-//	}
+
+	public TwitterLocal getTwitter() {
+		return twitter;
+	}
+
+	public NewYorkTimesLocal getNyt() {
+		return nyt;
+	}
 }

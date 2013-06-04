@@ -8,6 +8,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.web.WebBundleService;
@@ -20,7 +21,6 @@ import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
  */
 public class TwitterView extends CustomComponent implements View {
 
-	private TwitterLocal twitter;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
@@ -30,12 +30,11 @@ public class TwitterView extends CustomComponent implements View {
 	public TwitterView() {
 		super();
 
-
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
 		vertical.setLocked(true);
 
-
+		fillLayout();
 
 		setCompositionRoot(vertical);
 		setSizeFull();
@@ -43,21 +42,14 @@ public class TwitterView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-		content = new TwitterMessageTableWithDetails(twitter);
+		content = new TwitterMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter());
 
 		vertical.addComponent(topMenuBar);
 		vertical.addComponent(content);
-
 	}
 
 	@Override
 	public void enter(ViewChangeListener.ViewChangeEvent event) {
 		Notification.show("Entered View: " + event.getViewName());
-		this.twitter = getMyUI().twitter;
-		fillLayout();
-	}
-
-	private WebBundleService getMyUI() {
-		return (WebBundleService) getUI();
 	}
 }

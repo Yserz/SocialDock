@@ -8,19 +8,19 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
-import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
+import de.fhb.sd.web.WebBundleService;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
+import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
 
 /**
+ *
  * @author MacYser
  */
 public class MainView extends CustomComponent implements View {
 
-	private TwitterLocal twitter;
-	private NewYorkTimesLocal nyt;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
@@ -30,12 +30,11 @@ public class MainView extends CustomComponent implements View {
 	public MainView() {
 		super();
 
-
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
 		vertical.setLocked(true);
 
-
+		fillLayout();
 
 		setCompositionRoot(vertical);
 		setSizeFull();
@@ -43,7 +42,7 @@ public class MainView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-		content = new MessageTableWithDetails(twitter, nyt);
+		content = new MessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt());
 
 		vertical.addComponent(topMenuBar);
 		vertical.addComponent(content);
@@ -53,12 +52,5 @@ public class MainView extends CustomComponent implements View {
 	@Override
 	public void enter(ViewChangeListener.ViewChangeEvent event) {
 		Notification.show("Entered View: " + event.getViewName());
-		this.twitter = getMyUI().twitter;
-		this.nyt = getMyUI().nyt;
-		fillLayout();
-	}
-
-	private WebBundleService getMyUI() {
-		return (WebBundleService) getUI();
 	}
 }
