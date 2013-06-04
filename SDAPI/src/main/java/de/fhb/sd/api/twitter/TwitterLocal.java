@@ -21,7 +21,5 @@ public interface TwitterLocal {
 
 	List<Message> getMessages();
 
-	String hello();
-
 	String handleTwitterException(Exception e);
 }
