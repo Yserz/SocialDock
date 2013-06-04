@@ -18,7 +18,7 @@ package de.fhb.sd.twitter.service;
 
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.twitter.domain.TwitterMessage;
+import de.fhb.sd.domain.entity.TwitterMessage;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

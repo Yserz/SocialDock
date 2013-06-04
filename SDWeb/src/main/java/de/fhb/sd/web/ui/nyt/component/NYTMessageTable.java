@@ -6,7 +6,7 @@ package de.fhb.sd.web.ui.nyt.component;
 
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
+import de.fhb.sd.domain.entity.NewYorkTimesMessage;
 import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
@@ -44,10 +44,10 @@ public class NYTMessageTable extends MessageTable {
 			for (Message message : messages) {
 				NewYorkTimesMessage nytM = (NewYorkTimesMessage) message;
 				String[] messageAtt = new String[]{
-						nytM.getTitle(),
-						nytM.getAuthor(),
-						nytM.getSection(),
-						nytM.getPublished().toString()
+					nytM.getTitle(),
+					nytM.getAuthor(),
+					nytM.getSection(),
+					nytM.getPublished().toString()
 				};
 
 				messageTable.addItem(messageAtt, message);

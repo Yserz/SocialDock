@@ -7,6 +7,7 @@ package de.fhb.sd.web.ui.nyt;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -41,12 +42,15 @@ public class NewYorkTimesView extends CustomComponent implements View {
 	}
 
 	private void fillLayout() {
+		vertical.removeAllComponents();
 		topMenuBar = new TopMenuBar();
-		content = new NYTMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getNyt());
-
 		vertical.addComponent(topMenuBar);
-		vertical.addComponent(content);
-
+		if (((WebBundleService) UI.getCurrent()).getNyt() != null) {
+			content = new NYTMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getNyt());
+			vertical.addComponent(content);
+		} else {
+			vertical.addComponent(new Label("Service Unavailable"));
+		}
 	}
 
 	@Override

@@ -92,6 +92,11 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 			}
 		} else if (event.getType() == ServiceEvent.UNREGISTERING) {
 			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
+			if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
+				unregisterTwitterService();
+			} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
+				unregisterNYTService();
+			}
 		} else if (event.getType() == ServiceEvent.MODIFIED) {
 			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
 			if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
@@ -111,7 +116,7 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 			twitter = null;
 			bundleContext.ungetService(bundleContext.getServiceReference(TwitterLocal.class.getName()));
 		} catch (NullPointerException | ServiceUnavailableException e) {
-			log("ServiceUnavailableException: Twitter- or NYT-Bundle unavailable.");
+			log("ServiceUnavailableException: Twitter-Bundle unavailable.");
 		}
 	}
 
@@ -120,19 +125,16 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 			nyt = null;
 			bundleContext.ungetService(bundleContext.getServiceReference(NewYorkTimesLocal.class.getName()));
 		} catch (NullPointerException | ServiceUnavailableException e) {
-			log("ServiceUnavailableException: Twitter- or NYT-Bundle unavailable.");
+			log("ServiceUnavailableException: NYT-Bundle unavailable.");
 		}
 	}
 
 	private void registerTwitterService() {
 		log("Registering TwitterService");
-		ServiceReference twitterRef = bundleContext.getServiceReference(TwitterLocal.class.getName());
-		if (twitterRef == null) {
-			log("TwitterRef == null");
-		}
-		twitter = (TwitterLocal) bundleContext.getService(twitterRef);
-		if (twitter == null) {
-			log("twitterService == null");
+		try {
+			twitter = (TwitterLocal) bundleContext.getService(bundleContext.getServiceReference(TwitterLocal.class.getName()));
+		} catch (NullPointerException | ServiceUnavailableException e) {
+			log("ServiceUnavailableException: Twitter-Bundle unavailable.");
 		}
 	}
 

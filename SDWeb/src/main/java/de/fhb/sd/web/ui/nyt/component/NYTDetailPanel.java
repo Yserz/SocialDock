@@ -4,7 +4,7 @@ import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
+import de.fhb.sd.domain.entity.NewYorkTimesMessage;
 import de.fhb.sd.web.ui.util.DetailPanel;
 
 public class NYTDetailPanel extends DetailPanel {
