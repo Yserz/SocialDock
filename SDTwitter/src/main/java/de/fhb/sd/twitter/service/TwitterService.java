@@ -83,6 +83,7 @@ public class TwitterService implements TwitterLocal {
 	@Override
 	@PreDestroy
 	public void stop() {
+		LOG.log(Level.INFO, "Shutting down...");
 		twitterStream.shutdown();
 	}
 
