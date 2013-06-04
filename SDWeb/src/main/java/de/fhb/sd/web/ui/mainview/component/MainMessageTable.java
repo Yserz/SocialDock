@@ -29,7 +29,6 @@ public class MainMessageTable extends MessageTable {
 		super(new NYTDetailPanel(null));
 		this.twitter = twitter;
 		this.nyt = nyt;
-//		twitter.start();
 		addData();
 	}
 
@@ -53,9 +52,13 @@ public class MainMessageTable extends MessageTable {
 	protected void addData() {
 		try {
 			messageTable.removeAllItems();
-
-			List<Message> allMessages = new ArrayList<>(twitter.getMessages());
-			allMessages.addAll(nyt.getMessages());
+			List<Message> allMessages = new ArrayList<>();
+			if (twitter != null) {
+				allMessages.addAll(twitter.getMessages());
+			}
+			if (nyt != null) {
+				allMessages.addAll(nyt.getMessages());
+			}
 			for (Message message : allMessages) {
 				String[] messageAtt = new String[]{
 					message.getAuthor(),

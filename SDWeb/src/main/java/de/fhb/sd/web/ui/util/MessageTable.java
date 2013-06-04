@@ -32,10 +32,6 @@ abstract public class MessageTable extends CustomComponent {
 		init();
 	}
 
-//	public void updateTable() {
-//		addData();
-//		messageTable.refreshRowCache();
-//	}
 	public void updateDetailPanel() {
 		DetailPanel newDetail = getNewDetailPanel();
 		content.replaceComponent(detailPanel, newDetail);
@@ -65,26 +61,4 @@ abstract public class MessageTable extends CustomComponent {
 	abstract protected String[] addHeader();
 
 	abstract protected DetailPanel getNewDetailPanel();
-//	@Override
-//	public void run() {
-//		boolean loop = true;
-//
-//		while (loop) {
-//			try {
-//				Thread.sleep(10000);
-//				//update the data in table
-//				updateTable();
-//
-//				messageTable.refreshRowCache();
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//				loop = false;
-//			} catch (IllegalStateException ise) {
-//				ise.printStackTrace();
-//				loop = false;
-//			}
-//		}
-//
-//	}
 }

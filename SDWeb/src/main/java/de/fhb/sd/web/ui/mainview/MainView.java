@@ -46,12 +46,9 @@ public class MainView extends CustomComponent implements View {
 		vertical.removeAllComponents();
 		topMenuBar = new TopMenuBar();
 		vertical.addComponent(topMenuBar);
-		if (((WebBundleService) UI.getCurrent()).getNyt() != null && ((WebBundleService) UI.getCurrent()).getTwitter() != null) {
-			content = new MessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt());
-			vertical.addComponent(content);
-		} else {
-			vertical.addComponent(new Label("Service Unavailable"));
-		}
+		content = new MessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt());
+		vertical.addComponent(content);
+
 	}
 
 	@Override
