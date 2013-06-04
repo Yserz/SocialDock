@@ -8,9 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
- *
  * @author MacYser
  */
 @Entity
@@ -21,6 +21,15 @@ public class Message extends BaseEntity {
 	private Long id;
 	private String message;
 	private String author;
+	private Date published;
+
+	public Date getPublished() {
+		return published;
+	}
+
+	public void setPublished(Date published) {
+		this.published = published;
+	}
 
 	public String getMessage() {
 		return message;

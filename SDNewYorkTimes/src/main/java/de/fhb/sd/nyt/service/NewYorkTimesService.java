@@ -30,7 +30,6 @@ import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Logger;
 
 /**
@@ -74,9 +73,13 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 		messageList = new ArrayList<Message>();
 		long id = 0;
 		for (Result result : mostPopular.results) {
-			Message message = new NewYorkTimesMessage();
+			NewYorkTimesMessage message = new NewYorkTimesMessage();
 			message.setId(id++);
 			message.setMessage(result.isAbstract);
+			message.setTitle(result.title);
+			message.setSection(result.section);
+			message.setPublished(result.published_date);
+			message.setAuthor(result.byline.substring(3));
 			messageList.add(message);
 		}
 		date = new Date();
