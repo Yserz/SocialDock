@@ -4,10 +4,11 @@ import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.twitter.domain.TwitterMessage;
+import de.fhb.sd.domain.entity.TwitterMessage;
 import de.fhb.sd.web.ui.util.DetailPanel;
 
 public class TwitterDetailPanel extends DetailPanel {
+
 	public TwitterDetailPanel(Message selectedMessage) {
 		super(selectedMessage);
 	}

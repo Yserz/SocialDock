@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.nyt.api.*;
-import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
+import de.fhb.sd.domain.entity.NewYorkTimesMessage;
 import de.fhb.sd.nyt.util.MostPopular;
 import de.fhb.sd.nyt.util.Result;
 

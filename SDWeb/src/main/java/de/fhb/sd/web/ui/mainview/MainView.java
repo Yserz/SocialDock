@@ -7,6 +7,7 @@ package de.fhb.sd.web.ui.mainview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -14,6 +15,7 @@ import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.web.WebBundleService;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
+import de.fhb.sd.web.ui.nyt.component.NYTMessageTableWithDetails;
 
 /**
  *
@@ -41,12 +43,15 @@ public class MainView extends CustomComponent implements View {
 	}
 
 	private void fillLayout() {
+		vertical.removeAllComponents();
 		topMenuBar = new TopMenuBar();
-		content = new MessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt());
-
 		vertical.addComponent(topMenuBar);
-		vertical.addComponent(content);
-
+		if (((WebBundleService) UI.getCurrent()).getNyt() != null && ((WebBundleService) UI.getCurrent()).getTwitter() != null) {
+			content = new MessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt());
+			vertical.addComponent(content);
+		} else {
+			vertical.addComponent(new Label("Service Unavailable"));
+		}
 	}
 
 	@Override

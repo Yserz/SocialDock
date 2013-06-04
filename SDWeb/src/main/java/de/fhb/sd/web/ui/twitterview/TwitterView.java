@@ -7,6 +7,7 @@ package de.fhb.sd.web.ui.twitterview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
@@ -41,11 +42,15 @@ public class TwitterView extends CustomComponent implements View {
 	}
 
 	private void fillLayout() {
+		vertical.removeAllComponents();
 		topMenuBar = new TopMenuBar();
-		content = new TwitterMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter());
-
 		vertical.addComponent(topMenuBar);
-		vertical.addComponent(content);
+		if (((WebBundleService) UI.getCurrent()).getTwitter() != null) {
+			content = new TwitterMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter());
+			vertical.addComponent(content);
+		} else {
+			vertical.addComponent(new Label("Service Unavailable"));
+		}
 	}
 
 	@Override

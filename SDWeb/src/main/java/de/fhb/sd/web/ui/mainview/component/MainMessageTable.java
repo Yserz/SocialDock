@@ -7,8 +7,8 @@ package de.fhb.sd.web.ui.mainview.component;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
-import de.fhb.sd.twitter.domain.TwitterMessage;
+import de.fhb.sd.domain.entity.NewYorkTimesMessage;
+import de.fhb.sd.domain.entity.TwitterMessage;
 import de.fhb.sd.web.ui.nyt.component.NYTDetailPanel;
 import de.fhb.sd.web.ui.twitterview.component.TwitterDetailPanel;
 import de.fhb.sd.web.ui.util.DetailPanel;
@@ -58,8 +58,8 @@ public class MainMessageTable extends MessageTable {
 			allMessages.addAll(nyt.getMessages());
 			for (Message message : allMessages) {
 				String[] messageAtt = new String[]{
-						message.getAuthor(),
-						message.getMessage()
+					message.getAuthor(),
+					message.getMessage()
 				};
 
 				messageTable.addItem(messageAtt, message);
