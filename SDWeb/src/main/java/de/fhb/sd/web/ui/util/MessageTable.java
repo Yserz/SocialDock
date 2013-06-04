@@ -5,24 +5,27 @@
 package de.fhb.sd.web.ui.util;
 
 import com.vaadin.data.Property;
-import com.vaadin.ui.*;
+import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.domain.entity.Message;
 
 abstract public class MessageTable extends CustomComponent implements Runnable {
 
 	protected Message selectedMessage;
-	private DetailPanel detail;
+	private DetailPanel detailPanel;
 	protected Table messageTable;
 	protected VerticalSplitPanel content = new VerticalSplitPanel();
 
-	protected MessageTable() {
+	protected MessageTable(DetailPanel detailPanel) {
 		super();
 		messageTable = new Table();
-		detail = new DetailPanel();
+		this.detailPanel = detailPanel;
 		content.setSizeFull();
 		content.setSplitPosition(70, Unit.PERCENTAGE);
 		content.addComponent(messageTable);
-		content.addComponent(detail);
+		content.addComponent(detailPanel);
 		setCompositionRoot(content);
 		messageTable.markAsDirtyRecursive();
 
@@ -35,9 +38,9 @@ abstract public class MessageTable extends CustomComponent implements Runnable {
 	}
 
 	public void updateDetailPanel() {
-		DetailPanel newDetail = new DetailPanel();
-		content.replaceComponent(detail, newDetail);
-		detail = newDetail;
+		DetailPanel newDetail = getNewDetailPanel();
+		content.replaceComponent(detailPanel, newDetail);
+		detailPanel = newDetail;
 	}
 
 	private void init() {
@@ -62,6 +65,9 @@ abstract public class MessageTable extends CustomComponent implements Runnable {
 
 	abstract protected String[] addHeader();
 
+	abstract protected DetailPanel getNewDetailPanel();
+
+
 	@Override
 	public void run() {
 		boolean loop = true;
@@ -83,35 +89,5 @@ abstract public class MessageTable extends CustomComponent implements Runnable {
 			}
 		}
 
-	}
-
-	private class DetailPanel extends CustomComponent {
-
-		private VerticalLayout vertical = new VerticalLayout();
-		private HorizontalLayout buttonLine = new HorizontalLayout();
-
-		public DetailPanel() {
-			super();
-			setCompositionRoot(vertical);
-			vertical.setMargin(true);
-			setSizeFull();
-
-			init();
-		}
-
-		private void init() {
-
-			vertical.addComponent(buttonLine);
-
-			GridLayout infoGrid = new GridLayout(2, 2);
-			infoGrid.setMargin(true);
-			infoGrid.addComponent(new Label("Author: "));
-			infoGrid.addComponent(new Label(selectedMessage != null ? selectedMessage.getAuthor() : ""));
-
-			infoGrid.addComponent(new Label("Message: "));
-			infoGrid.addComponent(new Label(selectedMessage != null ? selectedMessage.getMessage() : ""));
-
-			vertical.addComponent(infoGrid);
-		}
 	}
 }

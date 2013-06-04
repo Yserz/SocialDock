@@ -7,6 +7,7 @@ package de.fhb.sd.web.ui.nyt.component;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
+import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.List;
@@ -16,7 +17,7 @@ public class NYTMessageTable extends MessageTable {
 	private NewYorkTimesLocal nyt;
 
 	public NYTMessageTable(final NewYorkTimesLocal nyt) {
-		super();
+		super(new NYTDetailPanel(null));
 		this.nyt = nyt;
 		addData();
 	}
@@ -24,6 +25,11 @@ public class NYTMessageTable extends MessageTable {
 	@Override
 	protected String[] addHeader() {
 		return new String[]{"Title", "Author", "Abstract", "Section", "Published"};
+	}
+
+	@Override
+	protected DetailPanel getNewDetailPanel() {
+		return new NYTDetailPanel(selectedMessage);
 	}
 
 	@Override
