@@ -21,16 +21,7 @@ abstract public class DetailPanel extends CustomComponent {
 	}
 
 	private void init() {
-
 		AbstractLayout layoutContent = addDetailContent();
-//		GridLayout infoGrid = new GridLayout(2, 2);
-//		infoGrid.setMargin(true);
-//		infoGrid.addComponent(new Label("Author: "));
-//		infoGrid.addComponent(new Label(selectedMessage != null ? selectedMessage.getAuthor() : ""));
-//
-//		infoGrid.addComponent(new Label("Message: "));
-//		infoGrid.addComponent(new Label(selectedMessage != null ? selectedMessage.getMessage() : ""));
-
 		vertical.addComponent(layoutContent);
 	}
 

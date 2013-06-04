@@ -15,9 +15,8 @@ public class NYTDetailPanel extends DetailPanel {
 
 	@Override
 	protected AbstractLayout addDetailContent() {
-//		Title", "Author", "Abstract", "Section", "Published
 		NewYorkTimesMessage nytM = (NewYorkTimesMessage) selectedMessage;
-		GridLayout infoGrid = new GridLayout(2, 2);
+		GridLayout infoGrid = new GridLayout(2, 5);
 		infoGrid.setMargin(true);
 		infoGrid.addComponent(new Label("Title: "));
 		infoGrid.addComponent(new Label(nytM != null ? nytM.getTitle() : ""));
@@ -25,14 +24,14 @@ public class NYTDetailPanel extends DetailPanel {
 		infoGrid.addComponent(new Label("Author: "));
 		infoGrid.addComponent(new Label(nytM != null ? nytM.getAuthor() : ""));
 
-		infoGrid.addComponent(new Label("Abstract: "));
-		infoGrid.addComponent(new Label(nytM != null ? nytM.getMessage() : ""));
-
 		infoGrid.addComponent(new Label("Section: "));
 		infoGrid.addComponent(new Label(nytM != null ? nytM.getSection() : ""));
 
 		infoGrid.addComponent(new Label("Published: "));
 		infoGrid.addComponent(new Label(nytM != null ? nytM.getPublished().toString() : ""));
+
+		infoGrid.addComponent(new Label("Abstract: "));
+		infoGrid.addComponent(new Label(nytM != null ? nytM.getMessage() : ""));
 
 		return infoGrid;
 	}

@@ -111,7 +111,6 @@
                         </Import-Package>
                         <Private-Package>
                             de.fhb.sd.nyt.util.*,
-                            de.fhb.sd.nyt.domain.*,
                             de.fhb.sd.nyt.api.*,
                             twitter4j.*
                         </Private-Package>
