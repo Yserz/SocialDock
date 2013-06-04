@@ -21,6 +21,7 @@ abstract public class MessageTable extends CustomComponent {
 	protected MessageTable(DetailPanel detailPanel) {
 		super();
 		messageTable = new Table();
+		messageTable.setSizeFull();
 		this.detailPanel = detailPanel;
 		content.setSizeFull();
 		content.setSplitPosition(70, Unit.PERCENTAGE);
