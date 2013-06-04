@@ -11,6 +11,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
+import de.fhb.sd.web.WebBundleService;
 import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 
@@ -34,7 +35,6 @@ public class MainView extends CustomComponent implements View {
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
 		vertical.setLocked(true);
-
 
 
 		setCompositionRoot(vertical);

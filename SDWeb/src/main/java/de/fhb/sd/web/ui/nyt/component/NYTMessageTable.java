@@ -27,7 +27,7 @@ public class NYTMessageTable extends MessageTable {
 
 	@Override
 	protected String[] addHeader() {
-		return new String[]{"Title", "Author", "Abstract", "Section", "Published"};
+		return new String[]{"Title", "Author", "Section", "Published"};
 	}
 
 	@Override
@@ -40,16 +40,15 @@ public class NYTMessageTable extends MessageTable {
 		try {
 			messageTable.removeAllItems();
 
-		List<Message> messages = nyt.getMessages();
-		for (Message message : messages) {
-			NewYorkTimesMessage nytM = (NewYorkTimesMessage) message;
-			String[] messageAtt = new String[]{
-					nytM.getTitle(),
-					nytM.getAuthor(),
-					nytM.getMessage(),
-					nytM.getSection(),
-					nytM.getPublished().toString()
-			};
+			List<Message> messages = nyt.getMessages();
+			for (Message message : messages) {
+				NewYorkTimesMessage nytM = (NewYorkTimesMessage) message;
+				String[] messageAtt = new String[]{
+						nytM.getTitle(),
+						nytM.getAuthor(),
+						nytM.getSection(),
+						nytM.getPublished().toString()
+				};
 
 				messageTable.addItem(messageAtt, message);
 			}
