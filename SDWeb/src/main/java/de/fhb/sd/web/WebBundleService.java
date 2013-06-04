@@ -21,6 +21,7 @@ import org.glassfish.osgicdi.OSGiService;
 import org.glassfish.osgicdi.ServiceUnavailableException;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
 import org.osgi.framework.ServiceReference;
@@ -69,8 +70,20 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		registerTwitterService();
-		registerNYTService();
+		try {
+			ServiceReference[] srl = context.getServiceReferences(TwitterLocal.class.getName(), null);
+			for (int i = 0; srl != null && i < srl.length; i++) {
+				this.serviceChanged(new ServiceEvent(ServiceEvent.REGISTERED, srl[i]));
+			}
+			srl = context.getServiceReferences(NewYorkTimesLocal.class.getName(), null);
+			for (int i = 0; srl != null && i < srl.length; i++) {
+				this.serviceChanged(new ServiceEvent(ServiceEvent.REGISTERED, srl[i]));
+			}
+		} catch (InvalidSyntaxException e) {
+			e.printStackTrace();
+		}
+//		registerTwitterService();
+//		registerNYTService();
 	}
 
 	@Override
@@ -83,26 +96,28 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 
 		String[] objectClass = (String[]) event.getServiceReference().getProperty("objectClass");
 
-		if (event.getType() == ServiceEvent.REGISTERED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
-			if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
-				registerTwitterService();
-			} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
-				registerNYTService();
-			}
-		} else if (event.getType() == ServiceEvent.UNREGISTERING) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
-			if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
-				unregisterTwitterService();
-			} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
-				unregisterNYTService();
-			}
-		} else if (event.getType() == ServiceEvent.MODIFIED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
-			if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
-				registerTwitterService();
-			} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
-				registerNYTService();
+		if (objectClass[0].contains("de.fhb.sd")) {
+			if (event.getType() == ServiceEvent.REGISTERED) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
+				if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
+					registerTwitterService();
+				} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
+					registerNYTService();
+				}
+			} else if (event.getType() == ServiceEvent.UNREGISTERING) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
+				if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
+					unregisterTwitterService();
+				} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
+					unregisterNYTService();
+				}
+			} else if (event.getType() == ServiceEvent.MODIFIED) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+				if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
+					registerTwitterService();
+				} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
+					registerNYTService();
+				}
 			}
 		}
 	}

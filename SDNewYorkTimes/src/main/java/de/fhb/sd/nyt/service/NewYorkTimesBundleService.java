@@ -62,12 +62,14 @@ public class NewYorkTimesBundleService implements BundleActivator, ServiceListen
 
 		String[] objectClass = (String[]) event.getServiceReference().getProperty("objectClass");
 
-		if (event.getType() == ServiceEvent.REGISTERED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
-		} else if (event.getType() == ServiceEvent.UNREGISTERING) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
-		} else if (event.getType() == ServiceEvent.MODIFIED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+		if (objectClass[0].contains("de.fhb.sd")) {
+			if (event.getType() == ServiceEvent.REGISTERED) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
+			} else if (event.getType() == ServiceEvent.UNREGISTERING) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
+			} else if (event.getType() == ServiceEvent.MODIFIED) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+			}
 		}
 	}
 

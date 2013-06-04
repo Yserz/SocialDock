@@ -24,8 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PreDestroy;
-import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.ejb.Stateless;
 import twitter4j.DirectMessage;
@@ -58,6 +56,7 @@ public class TwitterService implements TwitterLocal {
 	private final String tokenSecret = "2W6d3aNWLYTLcxWCsXDoBesDsiJADh7B0iWxERa9AnU";
 	private TwitterStream twitterStream;
 	private List<Message> messages;
+	private boolean started;
 
 	public TwitterService() {
 		twitterStream = new TwitterStreamFactory().getInstance();
@@ -67,21 +66,26 @@ public class TwitterService implements TwitterLocal {
 
 		messages = new ArrayList<>();
 		twitterStream.addListener(new BaseUserStreamListener());
-	}
-
-	public String hello() {
-		return "hello";
+		started = false;
 	}
 
 	@Override
 	public void start() {
-		LOG.log(Level.INFO, "###########################################################");
-//		twitterStream.sample();
-		twitterStream.user();
+		if (!started) {
+			LOG.log(Level.INFO, "Starting Stream...");
+			try {
+				//wait for 10 secounds because osgi is maybe starting up
+				Thread.sleep(10000);
+			} catch (InterruptedException ex) {
+				Logger.getLogger(TwitterService.class.getName()).log(Level.SEVERE, null, ex);
+			}
+//			twitterStream.sample();
+			twitterStream.user();
+			started = true;
+		}
 	}
 
 	@Override
-	@PreDestroy
 	public void stop() {
 		LOG.log(Level.INFO, "Shutting down...");
 		twitterStream.shutdown();
@@ -210,7 +214,7 @@ public class TwitterService implements TwitterLocal {
 		@Override
 		public void onException(Exception excptn) {
 			if (excptn instanceof TwitterException) {
-				LOG.log(Level.SEVERE, handleTwitterException((TwitterException) excptn), excptn);
+				handleTwitterException((TwitterException) excptn);
 				//TODO
 			} else {
 				LOG.log(Level.SEVERE, null, excptn);
@@ -269,8 +273,8 @@ public class TwitterService implements TwitterLocal {
 				LOG.log(Level.SEVERE, "The Twitter servers are up, but overloaded with requests. Try again later.", ex);
 				return "The Twitter servers are up, but overloaded with requests. Try again later.";
 			} else if (-1 == ex.getStatusCode()) {
-				stop();
-				LOG.log(Level.SEVERE, "Can not connect to the internet or the host is down.", ex);
+//				stop();
+				LOG.log(Level.SEVERE, "Can not connect to the internet or the host is down."/*, ex*/);
 				return "Can not connect to the internet or the host is down.";
 			} else {
 				stop();

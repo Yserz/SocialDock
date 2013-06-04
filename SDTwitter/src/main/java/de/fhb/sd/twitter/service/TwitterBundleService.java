@@ -32,6 +32,7 @@ import org.osgi.framework.ServiceListener;
  *
  * @author Michael Koppen <michael.koppen@googlemail.com>
  */
+@Stateless
 public class TwitterBundleService implements BundleActivator, ServiceListener {
 
 	private final static Logger LOG = Logger.getLogger(TwitterBundleService.class.getName());
@@ -47,7 +48,8 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		context.registerService(TwitterLocal.class.getName(), new TwitterService(), null);
+		TwitterLocal twitter = new TwitterService();
+		context.registerService(TwitterLocal.class.getName(), twitter, null);
 
 	}
 
@@ -63,12 +65,14 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 
 		String[] objectClass = (String[]) event.getServiceReference().getProperty("objectClass");
 
-		if (event.getType() == ServiceEvent.REGISTERED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
-		} else if (event.getType() == ServiceEvent.UNREGISTERING) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
-		} else if (event.getType() == ServiceEvent.MODIFIED) {
-			log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+		if (objectClass[0].contains("de.fhb.sd")) {
+			if (event.getType() == ServiceEvent.REGISTERED) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
+			} else if (event.getType() == ServiceEvent.UNREGISTERING) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
+			} else if (event.getType() == ServiceEvent.MODIFIED) {
+				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+			}
 		}
 	}
 
