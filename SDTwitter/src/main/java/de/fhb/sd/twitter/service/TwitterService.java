@@ -183,7 +183,7 @@ public class TwitterService implements TwitterLocal {
 
 			Message message = new TwitterMessage();
 			message.setId(status.getId());
-			message.setAuthor(status.getText());
+			message.setAuthor(status.getUser().getScreenName());
 			message.setMessage(status.getText());
 
 			messages.add(message);
@@ -229,6 +229,7 @@ public class TwitterService implements TwitterLocal {
 	 *
 	 * @param ex
 	 */
+	@Override
 	public String handleTwitterException(Exception e) {
 		if (e instanceof TwitterException) {
 			TwitterException ex = (TwitterException) e;

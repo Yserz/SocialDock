@@ -10,9 +10,12 @@ import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class MainMessageTable extends MessageTable {
 
+	private static final Logger LOG = Logger.getLogger(MainMessageTable.class.getName());
 	private TwitterLocal twitter;
 	private de.fhb.sd.api.nyt.NewYorkTimesLocal nyt;
 
@@ -20,7 +23,7 @@ public class MainMessageTable extends MessageTable {
 		super();
 		this.twitter = twitter;
 		this.nyt = nyt;
-		twitter.start();
+//		twitter.start();
 		addData();
 	}
 
@@ -31,17 +34,21 @@ public class MainMessageTable extends MessageTable {
 
 	@Override
 	protected void addData() {
-		messageTable.removeAllItems();
+		try {
+			messageTable.removeAllItems();
 
-		List<Message> allMessages = new ArrayList<>(twitter.getMessages());
-		allMessages.addAll(nyt.getMessages());
-		for (Message message : allMessages) {
-			String[] messageAtt = new String[]{
-				message.getAuthor(),
-				message.getMessage()
-			};
+			List<Message> allMessages = new ArrayList<>(twitter.getMessages());
+			allMessages.addAll(nyt.getMessages());
+			for (Message message : allMessages) {
+				String[] messageAtt = new String[]{
+					message.getAuthor(),
+					message.getMessage()
+				};
 
-			messageTable.addItem(messageAtt, message);
+				messageTable.addItem(messageAtt, message);
+			}
+		} catch (NullPointerException e) {
+			LOG.log(Level.INFO, "Nullpointer in TwitterMessageTable addData()!");
 		}
 	}
 }

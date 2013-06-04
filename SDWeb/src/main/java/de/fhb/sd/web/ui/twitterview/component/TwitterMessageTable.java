@@ -10,15 +10,18 @@ import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TwitterMessageTable extends MessageTable {
 
+	private static final Logger LOG = Logger.getLogger(TwitterMessageTable.class.getName());
 	private TwitterLocal twitter;
 
 	public TwitterMessageTable(final TwitterLocal twitter) {
 		super();
 		this.twitter = twitter;
-		twitter.start();
+//		twitter.start();
 		addData();
 	}
 
@@ -29,16 +32,22 @@ public class TwitterMessageTable extends MessageTable {
 
 	@Override
 	protected void addData() {
-		messageTable.removeAllItems();
+		try {
+			messageTable.removeAllItems();
 
-		List<Message> allMessages = new ArrayList<>(twitter.getMessages());
-		for (Message message : allMessages) {
-			String[] messageAtt = new String[]{
+
+			List<Message> allMessages = new ArrayList<>(twitter.getMessages());
+			for (Message message : allMessages) {
+				String[] messageAtt = new String[]{
 					message.getAuthor(),
 					message.getMessage()
-			};
+				};
 
-			messageTable.addItem(messageAtt, message);
+				messageTable.addItem(messageAtt, message);
+			}
+		} catch (NullPointerException e) {
+			LOG.log(Level.INFO, "Nullpointer in TwitterMessageTable addData()!");
 		}
+
 	}
 }
