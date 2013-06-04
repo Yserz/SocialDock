@@ -17,7 +17,7 @@ public class NYTMessageTableWithDetails extends CustomComponent {
 	public NYTMessageTableWithDetails(final NewYorkTimesLocal newYorkTimesLocal) {
 		super();
 		table = new NYTMessageTable(newYorkTimesLocal);
-		new Thread(table).start();
+//		new Thread(table).start();
 		setSizeFull();
 		setCompositionRoot(table);
 	}

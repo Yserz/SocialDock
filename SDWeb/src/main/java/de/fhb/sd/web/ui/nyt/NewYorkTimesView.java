@@ -8,6 +8,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.web.WebBundleService;
@@ -20,7 +21,6 @@ import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
  */
 public class NewYorkTimesView extends CustomComponent implements View {
 
-	private NewYorkTimesLocal nyt;
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
@@ -30,12 +30,11 @@ public class NewYorkTimesView extends CustomComponent implements View {
 	public NewYorkTimesView() {
 		super();
 
-
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
 		vertical.setLocked(true);
 
-
+		fillLayout();
 
 		setCompositionRoot(vertical);
 		setSizeFull();
@@ -43,7 +42,7 @@ public class NewYorkTimesView extends CustomComponent implements View {
 
 	private void fillLayout() {
 		topMenuBar = new TopMenuBar();
-		content = new NYTMessageTableWithDetails(nyt);
+		content = new NYTMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getNyt());
 
 		vertical.addComponent(topMenuBar);
 		vertical.addComponent(content);
@@ -53,11 +52,5 @@ public class NewYorkTimesView extends CustomComponent implements View {
 	@Override
 	public void enter(ViewChangeListener.ViewChangeEvent event) {
 		Notification.show("Entered View: " + event.getViewName());
-		this.nyt = getMyUI().nyt;
-		fillLayout();
-	}
-
-	private WebBundleService getMyUI() {
-		return (WebBundleService) getUI();
 	}
 }
