@@ -23,7 +23,7 @@ public class TwitterDetailPanel extends DetailPanel {
 		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getAuthor() : ""));
 
 		infoGrid.addComponent(new Label("Published: "));
-		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getPublished().toString() : ""));
+		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getPublished() + "" : ""));
 
 		infoGrid.addComponent(new Label("Message: "));
 		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getMessage() : ""));

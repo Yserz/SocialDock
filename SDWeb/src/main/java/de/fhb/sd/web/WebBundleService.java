@@ -133,6 +133,7 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 		log("Registering TwitterService");
 		try {
 			twitter = (TwitterLocal) bundleContext.getService(bundleContext.getServiceReference(TwitterLocal.class.getName()));
+			twitter.start();
 		} catch (NullPointerException | ServiceUnavailableException e) {
 			log("ServiceUnavailableException: Twitter-Bundle unavailable.");
 		}

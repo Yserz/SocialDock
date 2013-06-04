@@ -18,7 +18,6 @@ public class TwitterMessageTableWithDetails extends CustomComponent {
 	public TwitterMessageTableWithDetails(final TwitterLocal twitter) {
 		super();
 		table = new TwitterMessageTable(twitter);
-//		new Thread(table).start();
 		setSizeFull();
 		setCompositionRoot(table);
 	}

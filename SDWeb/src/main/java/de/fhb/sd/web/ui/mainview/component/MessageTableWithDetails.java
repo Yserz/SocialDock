@@ -18,7 +18,6 @@ public class MessageTableWithDetails extends CustomComponent {
 	public MessageTableWithDetails(final TwitterLocal twitter, final NewYorkTimesLocal nyt) {
 		super();
 		table = new MainMessageTable(twitter, nyt);
-//		new Thread(table).start();
 		setSizeFull();
 		setCompositionRoot(table);
 	}

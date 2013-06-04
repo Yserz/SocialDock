@@ -21,9 +21,8 @@ public class TwitterMessageTable extends MessageTable {
 	private TwitterLocal twitter;
 
 	public TwitterMessageTable(final TwitterLocal twitter) {
-		super(new NYTDetailPanel(null));
+		super(new TwitterDetailPanel(null));
 		this.twitter = twitter;
-//		twitter.start();
 		addData();
 	}
 
@@ -39,22 +38,20 @@ public class TwitterMessageTable extends MessageTable {
 
 	@Override
 	protected void addData() {
-//		try {
-		messageTable.removeAllItems();
+		try {
+			messageTable.removeAllItems();
+			List<Message> allMessages = new ArrayList<>(twitter.getMessages());
+			for (Message message : allMessages) {
+				String[] messageAtt = new String[]{
+					message.getAuthor(),
+					message.getMessage()
+				};
 
-
-		List<Message> allMessages = new ArrayList<>(twitter.getMessages());
-		for (Message message : allMessages) {
-			String[] messageAtt = new String[]{
-				message.getAuthor(),
-				message.getMessage()
-			};
-
-			messageTable.addItem(messageAtt, message);
+				messageTable.addItem(messageAtt, message);
+			}
+		} catch (NullPointerException e) {
+			LOG.log(Level.INFO, "Nullpointer in TwitterMessageTable addData()!");
 		}
-//		} catch (NullPointerException e) {
-//			LOG.log(Level.INFO, "Nullpointer in TwitterMessageTable addData()!");
-//		}
 
 	}
 }
