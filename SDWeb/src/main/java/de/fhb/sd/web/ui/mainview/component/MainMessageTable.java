@@ -7,7 +7,10 @@ package de.fhb.sd.web.ui.mainview.component;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
+import de.fhb.sd.nyt.domain.NewYorkTimesMessage;
+import de.fhb.sd.twitter.domain.TwitterMessage;
 import de.fhb.sd.web.ui.nyt.component.NYTDetailPanel;
+import de.fhb.sd.web.ui.twitterview.component.TwitterDetailPanel;
 import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
@@ -37,7 +40,13 @@ public class MainMessageTable extends MessageTable {
 
 	@Override
 	protected DetailPanel getNewDetailPanel() {
-		return new NYTDetailPanel(selectedMessage);
+		if (selectedMessage instanceof NewYorkTimesMessage) {
+			return new NYTDetailPanel(selectedMessage);
+		}
+		if (selectedMessage instanceof TwitterMessage) {
+			return new TwitterDetailPanel(selectedMessage);
+		}
+		return null;
 	}
 
 	@Override
@@ -45,13 +54,13 @@ public class MainMessageTable extends MessageTable {
 		try {
 			messageTable.removeAllItems();
 
-		List<Message> allMessages = new ArrayList<>(twitter.getMessages());
-		allMessages.addAll(nyt.getMessages());
-		for (Message message : allMessages) {
-			String[] messageAtt = new String[]{
-					message.getAuthor(),
-					message.getMessage()
-			};
+			List<Message> allMessages = new ArrayList<>(twitter.getMessages());
+			allMessages.addAll(nyt.getMessages());
+			for (Message message : allMessages) {
+				String[] messageAtt = new String[]{
+						message.getAuthor(),
+						message.getMessage()
+				};
 
 				messageTable.addItem(messageAtt, message);
 			}
