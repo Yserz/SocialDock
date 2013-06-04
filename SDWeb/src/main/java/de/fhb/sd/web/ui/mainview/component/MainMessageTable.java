@@ -7,6 +7,8 @@ package de.fhb.sd.web.ui.mainview.component;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
+import de.fhb.sd.web.ui.nyt.component.NYTDetailPanel;
+import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.ArrayList;
@@ -18,7 +20,7 @@ public class MainMessageTable extends MessageTable {
 	private NewYorkTimesLocal nyt;
 
 	public MainMessageTable(final TwitterLocal twitter, final NewYorkTimesLocal nyt) {
-		super();
+		super(new NYTDetailPanel(null));
 		this.twitter = twitter;
 		this.nyt = nyt;
 		twitter.start();
@@ -28,6 +30,11 @@ public class MainMessageTable extends MessageTable {
 	@Override
 	protected String[] addHeader() {
 		return new String[]{"Author", "Message"};
+	}
+
+	@Override
+	protected DetailPanel getNewDetailPanel() {
+		return new NYTDetailPanel(selectedMessage);
 	}
 
 	@Override

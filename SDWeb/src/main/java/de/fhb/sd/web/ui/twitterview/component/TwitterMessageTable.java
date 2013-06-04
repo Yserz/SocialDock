@@ -6,6 +6,8 @@ package de.fhb.sd.web.ui.twitterview.component;
 
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
+import de.fhb.sd.web.ui.nyt.component.NYTDetailPanel;
+import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ public class TwitterMessageTable extends MessageTable {
 	private TwitterLocal twitter;
 
 	public TwitterMessageTable(final TwitterLocal twitter) {
-		super();
+		super(new NYTDetailPanel(null));
 		this.twitter = twitter;
 		twitter.start();
 		addData();
@@ -25,6 +27,11 @@ public class TwitterMessageTable extends MessageTable {
 	@Override
 	protected String[] addHeader() {
 		return new String[]{"Author", "Message"};
+	}
+
+	@Override
+	protected DetailPanel getNewDetailPanel() {
+		return new NYTDetailPanel(selectedMessage);
 	}
 
 	@Override
