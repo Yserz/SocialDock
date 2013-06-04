@@ -55,6 +55,16 @@ public class BundleRegistry {
 		return bundles;
 	}
 
+	public Bundle getBundle(String bundleName) {
+		Bundle bundle = null;
+		for (Map.Entry<String, Long> entry : bundleRegistry.entrySet()) {
+			if (entry.getValue() > 0 && entry.getKey().equals(bundleName)) {
+				bundle = bundleContext.getBundle(entry.getValue());
+			}
+		}
+		return bundle;
+	}
+
 	public boolean registerBundle(Bundle bundle) {
 		boolean ret = false;
 		String bundleName = bundle.getSymbolicName();

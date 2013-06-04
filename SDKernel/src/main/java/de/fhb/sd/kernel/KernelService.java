@@ -141,7 +141,7 @@ public class KernelService implements KernelServiceLocal, BundleActivator, Servi
 
 	@Override
 	public Bundle getBundle(String bundleName) {
-		return bundleContext.getBundle(bundleName);
+		return bundleRegistry.getBundle(bundleName);
 	}
 
 	@Override

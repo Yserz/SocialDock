@@ -11,9 +11,12 @@ import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class NYTMessageTable extends MessageTable {
 
+	private static final Logger LOG = Logger.getLogger(NYTMessageTable.class.getName());
 	private NewYorkTimesLocal nyt;
 
 	public NYTMessageTable(final NewYorkTimesLocal nyt) {
@@ -34,7 +37,8 @@ public class NYTMessageTable extends MessageTable {
 
 	@Override
 	protected void addData() {
-		messageTable.removeAllItems();
+		try {
+			messageTable.removeAllItems();
 
 		List<Message> messages = nyt.getMessages();
 		for (Message message : messages) {
@@ -47,7 +51,10 @@ public class NYTMessageTable extends MessageTable {
 					nytM.getPublished().toString()
 			};
 
-			messageTable.addItem(messageAtt, message);
+				messageTable.addItem(messageAtt, message);
+			}
+		} catch (NullPointerException e) {
+			LOG.log(Level.INFO, "Nullpointer in NYTMessageTable addData()!");
 		}
 	}
 }

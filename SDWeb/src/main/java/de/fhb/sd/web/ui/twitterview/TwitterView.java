@@ -10,6 +10,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.VerticalSplitPanel;
 import de.fhb.sd.api.twitter.TwitterLocal;
+import de.fhb.sd.web.WebBundleService;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
 import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
 
@@ -26,15 +27,15 @@ public class TwitterView extends CustomComponent implements View {
 	private TwitterMessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
 
-	public TwitterView(final TwitterLocal twitter) {
+	public TwitterView() {
 		super();
-		this.twitter = twitter;
+
 
 		vertical.setSizeFull();
 		vertical.setSplitPosition(3, Unit.PERCENTAGE);
 		vertical.setLocked(true);
 
-		fillLayout();
+
 
 		setCompositionRoot(vertical);
 		setSizeFull();
@@ -52,5 +53,11 @@ public class TwitterView extends CustomComponent implements View {
 	@Override
 	public void enter(ViewChangeListener.ViewChangeEvent event) {
 		Notification.show("Entered View: " + event.getViewName());
+		this.twitter = getMyUI().twitter;
+		fillLayout();
+	}
+
+	private WebBundleService getMyUI() {
+		return (WebBundleService) getUI();
 	}
 }
