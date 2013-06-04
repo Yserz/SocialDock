@@ -53,6 +53,7 @@ public class TwitterBundleService implements BundleActivator, ServiceListener {
 
 	@Override
 	public void stop(BundleContext context) throws Exception {
+		((TwitterLocal) bundleContext.getService(bundleContext.getServiceReference(TwitterLocal.class.getName()))).stop();
 		context.ungetService(context.getServiceReference(TwitterLocal.class.getName()));
 		context.removeServiceListener(this);
 	}

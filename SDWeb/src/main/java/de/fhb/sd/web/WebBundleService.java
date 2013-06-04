@@ -112,21 +112,11 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 	}
 
 	private void unregisterTwitterService() {
-		try {
-			twitter = null;
-			bundleContext.ungetService(bundleContext.getServiceReference(TwitterLocal.class.getName()));
-		} catch (NullPointerException | ServiceUnavailableException e) {
-			log("ServiceUnavailableException: Twitter-Bundle unavailable.");
-		}
+		twitter = null;
 	}
 
 	private void unregisterNYTService() {
-		try {
-			nyt = null;
-			bundleContext.ungetService(bundleContext.getServiceReference(NewYorkTimesLocal.class.getName()));
-		} catch (NullPointerException | ServiceUnavailableException e) {
-			log("ServiceUnavailableException: NYT-Bundle unavailable.");
-		}
+		nyt = null;
 	}
 
 	private void registerTwitterService() {
