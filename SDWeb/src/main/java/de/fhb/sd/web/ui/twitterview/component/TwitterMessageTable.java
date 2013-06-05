@@ -33,7 +33,7 @@ public class TwitterMessageTable extends MessageTable {
 
 	@Override
 	protected DetailPanel getNewDetailPanel() {
-		return new NYTDetailPanel(selectedMessage);
+		return new TwitterDetailPanel(selectedMessage);
 	}
 
 	@Override

@@ -186,10 +186,12 @@ public class TwitterService implements TwitterLocal {
 				status.getUser().getScreenName(),
 				status});
 
-			Message message = new TwitterMessage();
+			TwitterMessage message = new TwitterMessage();
 			message.setId(status.getId());
 			message.setAuthor(status.getUser().getScreenName());
 			message.setMessage(status.getText());
+			message.setPublished(status.getCreatedAt());
+			message.setProfileImageUrlOfUser(status.getUser().getProfileImageURL());
 
 			messages.add(message);
 		}
@@ -232,7 +234,7 @@ public class TwitterService implements TwitterLocal {
 	 * Methode um gebündelt Twitterexception zu behandeln und in
 	 * Klartextmeldungen ausgeben zu koennen.
 	 *
-	 * @param ex
+	 * @param e
 	 */
 	@Override
 	public String handleTwitterException(Exception e) {

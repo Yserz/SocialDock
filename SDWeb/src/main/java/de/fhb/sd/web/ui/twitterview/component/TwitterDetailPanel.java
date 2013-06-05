@@ -1,8 +1,8 @@
 package de.fhb.sd.web.ui.twitterview.component;
 
-import com.vaadin.ui.AbstractLayout;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.server.ExternalResource;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.*;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.domain.entity.TwitterMessage;
 import de.fhb.sd.web.ui.util.DetailPanel;
@@ -15,19 +15,31 @@ public class TwitterDetailPanel extends DetailPanel {
 
 	@Override
 	protected AbstractLayout addDetailContent() {
-		TwitterMessage twitterM = (TwitterMessage) selectedMessage;
+		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setWidth(50, Unit.PERCENTAGE);
 		GridLayout infoGrid = new GridLayout(2, 3);
-		infoGrid.setMargin(true);
 
-		infoGrid.addComponent(new Label("Author: "));
-		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getAuthor() : ""));
+		if (selectedMessage != null) {
+			TwitterMessage twitterM = (TwitterMessage) selectedMessage;
 
-		infoGrid.addComponent(new Label("Published: "));
-		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getPublished() + "" : ""));
+			ExternalResource resource = new ExternalResource(twitterM.getProfileImageUrlOfUser());
+			Image img = new Image();
+			img.setSource(resource);
 
-		infoGrid.addComponent(new Label("Message: "));
-		infoGrid.addComponent(new Label(twitterM != null ? twitterM.getMessage() : ""));
+			horizontalLayout.addComponent(img);
+			horizontalLayout.setWidth(110, Unit.PIXELS);
 
-		return infoGrid;
+			infoGrid.addComponent(new Label("Author: "));
+			infoGrid.addComponent(new Label(twitterM.getAuthor()));
+
+			infoGrid.addComponent(new Label("Published: "));
+			infoGrid.addComponent(new Label(twitterM.getPublished() + ""));
+
+			infoGrid.addComponent(new Label("Message: "));
+			infoGrid.addComponent(new Label(twitterM.getMessage()));
+
+			horizontalLayout.addComponent(infoGrid);
+		}
+		return horizontalLayout;
 	}
 }
