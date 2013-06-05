@@ -79,8 +79,8 @@ public class TwitterService implements TwitterLocal {
 			} catch (InterruptedException ex) {
 				Logger.getLogger(TwitterService.class.getName()).log(Level.SEVERE, null, ex);
 			}
-//			twitterStream.sample();
-			twitterStream.user();
+			twitterStream.sample();
+//			twitterStream.user();
 			started = true;
 		}
 	}
@@ -273,7 +273,7 @@ public class TwitterService implements TwitterLocal {
 				LOG.log(Level.SEVERE, "The Twitter servers are up, but overloaded with requests. Try again later.", ex);
 				return "The Twitter servers are up, but overloaded with requests. Try again later.";
 			} else if (-1 == ex.getStatusCode()) {
-//				stop();
+//				stop(); // Dont stop here because it works maybe later :)
 				LOG.log(Level.SEVERE, "Can not connect to the internet or the host is down."/*, ex*/);
 				return "Can not connect to the internet or the host is down.";
 			} else {

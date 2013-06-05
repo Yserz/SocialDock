@@ -107,9 +107,9 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 			} else if (event.getType() == ServiceEvent.UNREGISTERING) {
 				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
 				if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.twitter.TwitterLocal")) {
-					unregisterTwitterService();
+					twitter = null;
 				} else if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.nyt.NewYorkTimesLocal")) {
-					unregisterNYTService();
+					nyt = null;
 				}
 			} else if (event.getType() == ServiceEvent.MODIFIED) {
 				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
@@ -124,14 +124,6 @@ public class WebBundleService extends UI implements BundleActivator, ServiceList
 
 	private void log(String log) {
 		LOG.log(Level.INFO, "{0}: {1}", new Object[]{bundleName, log});
-	}
-
-	private void unregisterTwitterService() {
-		twitter = null;
-	}
-
-	private void unregisterNYTService() {
-		nyt = null;
 	}
 
 	private void registerTwitterService() {
