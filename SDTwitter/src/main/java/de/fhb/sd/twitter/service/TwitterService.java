@@ -79,8 +79,8 @@ public class TwitterService implements TwitterLocal {
 			} catch (InterruptedException ex) {
 				Logger.getLogger(TwitterService.class.getName()).log(Level.SEVERE, null, ex);
 			}
-			twitterStream.sample();
-//			twitterStream.user();
+//			twitterStream.sample();
+			twitterStream.user();
 			started = true;
 		}
 	}
