@@ -82,6 +82,7 @@ public class TwitterService implements TwitterLocal {
 //			twitterStream.sample();
 			twitterStream.user();
 			started = true;
+
 		}
 	}
 
