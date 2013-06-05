@@ -9,16 +9,15 @@ import de.fhb.sd.adminweb.ui.aboutview.AboutView;
 import de.fhb.sd.adminweb.ui.allbundles.AllBundlesView;
 import de.fhb.sd.adminweb.ui.mainview.MainView;
 import de.fhb.sd.api.kernel.KernelServiceLocal;
-import de.fhb.sd.api.twitter.TwitterLocal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
-import org.glassfish.osgicdi.OSGiService;
 import org.glassfish.osgicdi.ServiceUnavailableException;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
+import org.osgi.framework.ServiceReference;
 
 @Title("SocialDockAdmin")
 @PreserveOnRefresh
@@ -57,7 +56,15 @@ public class AdminWebBundleService extends UI implements BundleActivator, Servic
 		bundleName = bundleContext.getBundle().getSymbolicName();
 
 		context.addServiceListener(this);
-		registerKernelService();
+		try {
+			ServiceReference[] srl = context.getServiceReferences(KernelServiceLocal.class.getName(), null);
+			for (int i = 0; srl != null && i < srl.length; i++) {
+				this.serviceChanged(new ServiceEvent(ServiceEvent.REGISTERED, srl[i]));
+			}
+		} catch (InvalidSyntaxException e) {
+			e.printStackTrace();
+		}
+//		registerKernelService();
 	}
 
 	@Override
@@ -73,10 +80,17 @@ public class AdminWebBundleService extends UI implements BundleActivator, Servic
 		if (objectClass[0].contains("de.fhb.sd")) {
 			if (event.getType() == ServiceEvent.REGISTERED) {
 				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " registered.");
+				if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.kernel.KernelServiceLocal")) {
+					registerKernelService();
+				}
 			} else if (event.getType() == ServiceEvent.UNREGISTERING) {
 				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " unregistered.");
+				kernel = null;
 			} else if (event.getType() == ServiceEvent.MODIFIED) {
 				log("Service in Bundle " + bundleName + " of type " + objectClass[0] + " modified.");
+				if (objectClass[0].equalsIgnoreCase("de.fhb.sd.api.kernel.KernelServiceLocal")) {
+					registerKernelService();
+				}
 			}
 		}
 	}
