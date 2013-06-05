@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 public class NewYorkTimesMessage extends Message {
 	private String section;
 	private String title;
+	private String mediaURL;
 
 	public String getSection() {
 		return section;
@@ -30,5 +31,13 @@ public class NewYorkTimesMessage extends Message {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public String getMediaURL() {
+		return mediaURL;
+	}
+
+	public void setMediaURL(String mediaURL) {
+		this.mediaURL = mediaURL;
 	}
 }

@@ -20,8 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.nyt.api.*;
 import de.fhb.sd.domain.entity.NewYorkTimesMessage;
+import de.fhb.sd.nyt.api.*;
+import de.fhb.sd.nyt.util.Media;
 import de.fhb.sd.nyt.util.MostPopular;
 import de.fhb.sd.nyt.util.Result;
 
@@ -80,6 +81,7 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 			message.setSection(result.section);
 			message.setPublished(result.published_date);
 			message.setAuthor(result.byline.substring(3));
+			message.setMediaURL(result.getSmallImageURL());
 			messageList.add(message);
 		}
 		date = new Date();
