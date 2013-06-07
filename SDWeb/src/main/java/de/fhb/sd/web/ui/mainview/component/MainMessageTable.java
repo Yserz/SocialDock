@@ -15,7 +15,9 @@ import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,8 +35,11 @@ public class MainMessageTable extends MessageTable {
 	}
 
 	@Override
-	protected String[] addHeader() {
-		return new String[]{"Author", "Message"};
+	protected Map<String, Class> addHeader() {
+		Map<String, Class> map = new HashMap();
+		map.put("Author", String.class);
+		map.put("Message", String.class);
+		return map;
 	}
 
 	@Override

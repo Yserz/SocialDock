@@ -4,14 +4,16 @@
  */
 package de.fhb.sd.web.ui.twitterview.component;
 
+import com.vaadin.ui.Image;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
-import de.fhb.sd.web.ui.nyt.component.NYTDetailPanel;
 import de.fhb.sd.web.ui.util.DetailPanel;
 import de.fhb.sd.web.ui.util.MessageTable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,8 +29,11 @@ public class TwitterMessageTable extends MessageTable {
 	}
 
 	@Override
-	protected String[] addHeader() {
-		return new String[]{"Author", "Message"};
+	protected Map<String, Class> addHeader() {
+		Map<String, Class> map = new HashMap();
+		map.put("Author", String.class);
+		map.put("Message", String.class);
+		return map;
 	}
 
 	@Override

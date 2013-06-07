@@ -5,11 +5,10 @@
 package de.fhb.sd.web.ui.util;
 
 import com.vaadin.data.Property;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalSplitPanel;
+import com.vaadin.ui.*;
 import de.fhb.sd.domain.entity.Message;
+
+import java.util.Map;
 
 abstract public class MessageTable extends CustomComponent {
 
@@ -40,8 +39,8 @@ abstract public class MessageTable extends CustomComponent {
 	}
 
 	private void init() {
-		for (String field : addHeader()) {
-			messageTable.addContainerProperty(field, String.class, "");
+		for (Map.Entry<String, Class> stringClassEntry : addHeader().entrySet()) {
+			messageTable.addContainerProperty(stringClassEntry.getKey(), stringClassEntry.getValue(), null);
 		}
 		messageTable.setSelectable(true);
 		messageTable.setImmediate(true);
@@ -59,7 +58,7 @@ abstract public class MessageTable extends CustomComponent {
 
 	abstract protected void addData();
 
-	abstract protected String[] addHeader();
+	abstract protected Map<String, Class> addHeader();
 
 	abstract protected DetailPanel getNewDetailPanel();
 }
