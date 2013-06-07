@@ -8,7 +8,7 @@ import com.vaadin.data.Property;
 import com.vaadin.ui.*;
 import de.fhb.sd.domain.entity.Message;
 
-import java.util.Map;
+import java.util.List;
 
 abstract public class MessageTable extends CustomComponent {
 
@@ -39,9 +39,11 @@ abstract public class MessageTable extends CustomComponent {
 	}
 
 	private void init() {
-		for (Map.Entry<String, Class> stringClassEntry : addHeader().entrySet()) {
-			messageTable.addContainerProperty(stringClassEntry.getKey(), stringClassEntry.getValue(), null);
+		for (ColumnHeader column : addColumnHeader()) {
+			messageTable.addContainerProperty(column.columnName,column.columnClass, column.defaultValue);
+			messageTable.setColumnWidth(column, -1);
 		}
+
 		messageTable.setSelectable(true);
 		messageTable.setImmediate(true);
 		setHeight(100, Unit.PERCENTAGE);
@@ -58,7 +60,24 @@ abstract public class MessageTable extends CustomComponent {
 
 	abstract protected void addData();
 
-	abstract protected Map<String, Class> addHeader();
+	abstract protected List<ColumnHeader> addColumnHeader();
 
 	abstract protected DetailPanel getNewDetailPanel();
+
+	protected class ColumnHeader{
+		protected String columnName;
+		protected Class columnClass;
+		protected Object defaultValue;
+
+		public ColumnHeader(String columnName, Class columnClass) {
+			this.columnName = columnName;
+			this.columnClass = columnClass;
+		}
+
+		public ColumnHeader(String columnName, Class columnClass, Object defaultValue) {
+			this.columnName = columnName;
+			this.columnClass = columnClass;
+			this.defaultValue = defaultValue;
+		}
+	}
 }
