@@ -11,7 +11,8 @@ public class NewYorkTimesServiceTest {
 	public void testGetMostPopular() throws Exception {
 		NewYorkTimesService service = new NewYorkTimesService();
 		for (Message m : service.getMessages()) {
-			System.out.println(((NewYorkTimesMessage)m).getMediaURL());
+			System.out.println(((NewYorkTimesMessage)m).getTitle());
+			System.out.println(m.getPublished());
 		}
 	}
 }
