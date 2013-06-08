@@ -5,7 +5,7 @@ import de.fhb.sd.domain.entity.NewYorkTimesMessage;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
+
 public class NewYorkTimesServiceTest {
 	@Test
 	public void testGetMostPopular() throws Exception {

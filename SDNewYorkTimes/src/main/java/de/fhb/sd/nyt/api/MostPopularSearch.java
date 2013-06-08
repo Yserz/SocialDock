@@ -18,19 +18,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * 
  * http://api.nytimes.com/svc/mostpopular/{version}/{resource-type}/{section}[/
  * share-types]/{time- period}[.response-format]?api-key={your-API-key}
- * 
+ *
  * @author Chris Downes
- * 
  */
 public class MostPopularSearch {
 
-	private String BASE_URI = "http://api.nytimes.com/svc/mostpopular/";
-
 	NYTAPIKey key;
 	MostPopularQuery query;
+	private String BASE_URI = "http://api.nytimes.com/svc/mostpopular/";
 
 	public MostPopularSearch(NYTAPIKey key) {
 		this.key = key;
@@ -49,8 +46,11 @@ public class MostPopularSearch {
 		queryURL.append("/all-sections");
 		queryURL.append("/" + query.getTimePeriod().toString());
 		queryURL.append("/" + "?api-key=" + key.getKey());
+		System.out.println(queryURL);
 		try {
-			return HttpRequest.request(new URL(queryURL.toString()));
+			String jsonOutput = HttpRequest.request(new URL(queryURL.toString()));
+			jsonOutput = jsonOutput.replace("media\":\"\"", "media\":[]");
+			return jsonOutput;
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}
