@@ -46,7 +46,6 @@ public class MostPopularSearch {
 		queryURL.append("/all-sections");
 		queryURL.append("/" + query.getTimePeriod().toString());
 		queryURL.append("/" + "?api-key=" + key.getKey());
-		System.out.println(queryURL);
 		try {
 			String jsonOutput = HttpRequest.request(new URL(queryURL.toString()));
 			jsonOutput = jsonOutput.replace("media\":\"\"", "media\":[]");
