@@ -6,18 +6,13 @@ package de.fhb.sd.web.ui.twitterview;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.api.twitter.TwitterLocal;
+import com.vaadin.ui.*;
 import de.fhb.sd.web.WebBundleService;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
-import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
+import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTable;
+import de.fhb.sd.web.ui.util.MessageTableWithDetails;
 
 /**
- *
  * @author MacYser
  */
 public class TwitterView extends CustomComponent implements View {
@@ -25,7 +20,7 @@ public class TwitterView extends CustomComponent implements View {
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
-	private TwitterMessageTableWithDetails content;
+	private MessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
 
 	public TwitterView() {
@@ -46,7 +41,7 @@ public class TwitterView extends CustomComponent implements View {
 		topMenuBar = new TopMenuBar();
 		vertical.addComponent(topMenuBar);
 		if (((WebBundleService) UI.getCurrent()).getTwitter() != null) {
-			content = new TwitterMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter());
+			content = new MessageTableWithDetails(new TwitterMessageTable(((WebBundleService) UI.getCurrent()).getTwitter()));
 			vertical.addComponent(content);
 		} else {
 			vertical.addComponent(new Label("Service Unavailable"));

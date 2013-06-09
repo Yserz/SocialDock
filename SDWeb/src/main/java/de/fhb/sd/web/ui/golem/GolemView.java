@@ -8,8 +8,9 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import de.fhb.sd.web.WebBundleService;
-import de.fhb.sd.web.ui.golem.component.GolemMessageTableWithDetails;
+import de.fhb.sd.web.ui.golem.component.GolemMessageTable;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
+import de.fhb.sd.web.ui.util.MessageTableWithDetails;
 
 /**
  * @author MacYser
@@ -19,7 +20,7 @@ public class GolemView extends CustomComponent implements View {
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
-	private GolemMessageTableWithDetails content;
+	private MessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
 
 	public GolemView() {
@@ -40,7 +41,7 @@ public class GolemView extends CustomComponent implements View {
 		topMenuBar = new TopMenuBar();
 		vertical.addComponent(topMenuBar);
 		if (((WebBundleService) UI.getCurrent()).getNyt() != null) {
-			content = new GolemMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getGolem());
+			content = new MessageTableWithDetails(new GolemMessageTable(((WebBundleService) UI.getCurrent()).getGolem()));
 			vertical.addComponent(content);
 		} else {
 			vertical.addComponent(new Label("Service Unavailable"));

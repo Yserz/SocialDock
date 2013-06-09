@@ -2,22 +2,23 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package de.fhb.sd.web.ui.mainview.component;
+package de.fhb.sd.web.ui.util;
 
 import com.vaadin.ui.CustomComponent;
-import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.api.twitter.TwitterLocal;
+import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTable;
 
 /**
+ *
  * @author MacYser
  */
 public class MessageTableWithDetails extends CustomComponent {
 
-	private MainMessageTable table;
+	private MessageTable table;
 
-	public MessageTableWithDetails(final TwitterLocal twitter, final NewYorkTimesLocal nyt) {
+	public MessageTableWithDetails(MessageTable table) {
 		super();
-		table = new MainMessageTable(twitter, nyt);
+		this.table = table;
 		setSizeFull();
 		setCompositionRoot(table);
 	}

@@ -11,11 +11,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.api.nyt.NewYorkTimesLocal;
 import de.fhb.sd.web.WebBundleService;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
-import de.fhb.sd.web.ui.nyt.component.NYTMessageTableWithDetails;
-import de.fhb.sd.web.ui.twitterview.component.TwitterMessageTableWithDetails;
+import de.fhb.sd.web.ui.nyt.component.NYTMessageTable;
+import de.fhb.sd.web.ui.util.MessageTableWithDetails;
 
 /**
  * @author MacYser
@@ -25,7 +24,7 @@ public class NewYorkTimesView extends CustomComponent implements View {
 	/* define Layout objects */
 	private VerticalSplitPanel vertical = new VerticalSplitPanel();
 	/* define Components */
-	private NYTMessageTableWithDetails content;
+	private MessageTableWithDetails content;
 	private TopMenuBar topMenuBar;
 
 	public NewYorkTimesView() {
@@ -46,7 +45,7 @@ public class NewYorkTimesView extends CustomComponent implements View {
 		topMenuBar = new TopMenuBar();
 		vertical.addComponent(topMenuBar);
 		if (((WebBundleService) UI.getCurrent()).getNyt() != null) {
-			content = new NYTMessageTableWithDetails(((WebBundleService) UI.getCurrent()).getNyt());
+			content = new MessageTableWithDetails(new NYTMessageTable(((WebBundleService) UI.getCurrent()).getNyt()));
 			vertical.addComponent(content);
 		} else {
 			vertical.addComponent(new Label("Service Unavailable"));

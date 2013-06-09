@@ -7,15 +7,13 @@ package de.fhb.sd.web.ui.mainview;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalSplitPanel;
-import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.web.WebBundleService;
+import de.fhb.sd.web.ui.mainview.component.MainMessageTable;
 import de.fhb.sd.web.ui.mainview.component.TopMenuBar;
-import de.fhb.sd.web.ui.mainview.component.MessageTableWithDetails;
-import de.fhb.sd.web.ui.nyt.component.NYTMessageTableWithDetails;
+import de.fhb.sd.web.ui.util.MessageTableWithDetails;
 
 /**
  *
@@ -46,7 +44,7 @@ public class MainView extends CustomComponent implements View {
 		vertical.removeAllComponents();
 		topMenuBar = new TopMenuBar();
 		vertical.addComponent(topMenuBar);
-		content = new MessageTableWithDetails(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt());
+		content = new MessageTableWithDetails(new MainMessageTable(((WebBundleService) UI.getCurrent()).getTwitter(), ((WebBundleService) UI.getCurrent()).getNyt()));
 		vertical.addComponent(content);
 
 	}
