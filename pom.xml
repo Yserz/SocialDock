@@ -15,6 +15,7 @@
 		<module>SDAdminWeb</module>
 		<module>SDDomain</module>
 		<module>SDNewYorkTimes</module>
+        <module>SDGolem</module>
 	</modules>
 
 	<properties>

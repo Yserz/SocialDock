@@ -22,6 +22,7 @@ public class Message extends BaseEntity {
 	private String message;
 	private String author;
 	private Date published;
+	private String URL;
 
 	public Date getPublished() {
 		return published;
@@ -78,5 +79,13 @@ public class Message extends BaseEntity {
 	@Override
 	public String toString() {
 		return "de.fhb.sd.domain.entity.Message[ id=" + id + " ]";
+	}
+
+	public String getURL() {
+		return URL;
+	}
+
+	public void setURL(String URL) {
+		this.URL = URL;
 	}
 }

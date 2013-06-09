@@ -67,7 +67,7 @@
 					<instructions>
 						<Bundle-Activator>de.fhb.sd.api.ApiBundleService</Bundle-Activator>
 						<Export-Package>
-							de.fhb.sd.api.kernel, de.fhb.sd.api.twitter, de.fhb.sd.api.nyt, !de.fhb.sd.domain
+							de.fhb.sd.api.kernel, de.fhb.sd.api.twitter, de.fhb.sd.api.nyt, de.fhb.sd.api.golem, !de.fhb.sd.domain
 						</Export-Package>
 						<Private-Package>de.fhb.sd.api.*</Private-Package>
 					</instructions>

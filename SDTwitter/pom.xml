@@ -99,7 +99,6 @@
 							*
 						</Import-Package>
 						<Private-Package>
-							de.fhb.sd.twitter.repository.*,
 							twitter4j.*
 						</Private-Package>
 					</instructions>

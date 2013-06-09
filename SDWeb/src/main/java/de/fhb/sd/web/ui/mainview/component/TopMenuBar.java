@@ -19,6 +19,7 @@ public class TopMenuBar extends MenuBar {
 	private Command all;
 	private Command twitter;
 	private Command nyt;
+	private Command golem;
 	private Command about;
 
 	public TopMenuBar() {
@@ -63,6 +64,14 @@ public class TopMenuBar extends MenuBar {
 			}
 		};
 		addItem("NewYorkTimes", nyt);
+
+		golem = new MenuBar.Command() {
+			@Override
+			public void menuSelected(MenuItem selectedItem) {
+				getMyUI().navTo(getMyUI().GOLEM);
+			}
+		};
+		addItem("Golem", golem);
 
 		about = new MenuBar.Command() {
 			@Override
