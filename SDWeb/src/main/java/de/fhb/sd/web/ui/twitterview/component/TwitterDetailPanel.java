@@ -1,7 +1,6 @@
 package de.fhb.sd.web.ui.twitterview.component;
 
 import com.vaadin.server.ExternalResource;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.*;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.domain.entity.TwitterMessage;
@@ -18,10 +17,8 @@ public class TwitterDetailPanel extends DetailPanel {
 		Panel detailPanel = new Panel();
 		detailPanel.setSizeFull();
 
-
-		HorizontalLayout horizontalLayout = new HorizontalLayout();
-		horizontalLayout.setWidth(50, Unit.PERCENTAGE);
-		GridLayout infoGrid = new GridLayout(2, 3);
+		GridLayout infoGrid = new GridLayout(2, 5);
+        infoGrid.setWidth(300, Unit.PIXELS);
 
 		if (selectedMessage != null) {
 			TwitterMessage twitterM = (TwitterMessage) selectedMessage;
@@ -29,26 +26,26 @@ public class TwitterDetailPanel extends DetailPanel {
 			ExternalResource resource = new ExternalResource(twitterM.getProfileImageUrlOfUser());
 			Image img = new Image();
 			img.setSource(resource);
+            infoGrid.addComponent(img, 0, 0, 1, 0);
 
-			horizontalLayout.addComponent(img);
-			horizontalLayout.setWidth(110, Unit.PIXELS);
-
-			infoGrid.addComponent(new Label("Author: "));
+            Label component = new Label("Author: ");
+            component.setWidth(50, Unit.PIXELS);
+            infoGrid.addComponent(component);
 			Label authorLabel = new Label(twitterM.getAuthor());
-			authorLabel.setWidth("300px");
 			infoGrid.addComponent(authorLabel);
 
 			infoGrid.addComponent(new Label("Published: "));
 			Label publishedLabel = new Label(twitterM.getPublished() + "");
-			publishedLabel.setWidth("300px");
 			infoGrid.addComponent(publishedLabel);
 
 			infoGrid.addComponent(new Label("Message: "));
 			Label messageLabel = new Label(twitterM.getMessage());
-			messageLabel.setWidth("300px");
 			infoGrid.addComponent(messageLabel);
 
-			horizontalLayout.addComponent(infoGrid);
+            ExternalResource linkResource = new ExternalResource(twitterM.getURL());
+            infoGrid.addComponent(new Label("User URL: "));
+            Link urlLink = new Link(twitterM.getURL(), linkResource);
+            infoGrid.addComponent(urlLink);
 		}
 		detailPanel.setContent(infoGrid);
 		return detailPanel;

@@ -80,6 +80,7 @@ public class NewYorkTimesService implements NewYorkTimesLocal {
 			message.setMessage(result.isAbstract);
 			message.setTitle(result.title);
 			message.setSection(result.section);
+            message.setURL(result.url);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			try {
 				message.setPublished(sdf.parse(result.published_date));

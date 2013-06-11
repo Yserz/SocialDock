@@ -2,8 +2,6 @@ package de.fhb.sd.nyt.util;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Result {
@@ -14,6 +12,7 @@ public class Result {
 	@SerializedName("abstract")
 	public String isAbstract;
 	public List<Media> media;
+    public String url;
 
 	public String getSmallImageURL(){
 		if (media != null && !media.isEmpty()) {

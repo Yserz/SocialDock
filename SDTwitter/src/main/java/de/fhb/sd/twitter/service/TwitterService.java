@@ -19,24 +19,16 @@ package de.fhb.sd.twitter.service;
 import de.fhb.sd.api.twitter.TwitterLocal;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.domain.entity.TwitterMessage;
+import twitter4j.*;
+import twitter4j.auth.AccessToken;
+
+import javax.ejb.Startup;
+import javax.ejb.Stateless;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Startup;
-import javax.ejb.Stateless;
-import twitter4j.DirectMessage;
-import twitter4j.StallWarning;
-import twitter4j.Status;
-import twitter4j.StatusDeletionNotice;
-import twitter4j.TwitterException;
-import twitter4j.TwitterStream;
-import twitter4j.TwitterStreamFactory;
-import twitter4j.User;
-import twitter4j.UserList;
-import twitter4j.UserStreamListener;
-import twitter4j.auth.AccessToken;
 
 /**
  * This Bean connects to Twitter and streams messages.
@@ -193,6 +185,7 @@ public class TwitterService implements TwitterLocal {
 			message.setMessage(status.getText());
 			message.setPublished(status.getCreatedAt());
 			message.setProfileImageUrlOfUser(status.getUser().getProfileImageURL());
+            message.setURL("https://twitter.com/" +status.getUser().getScreenName());
 
 			messages.add(message);
 		}
@@ -201,7 +194,6 @@ public class TwitterService implements TwitterLocal {
 		public void onDeletionNotice(StatusDeletionNotice sdn) {
 //			LOG.log(Level.SEVERE, "Not supported yet.");
 		}
-		//########################
 
 		@Override
 		public void onTrackLimitationNotice(int i) {

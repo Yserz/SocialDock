@@ -74,7 +74,7 @@ public class GolemService implements GolemLocal {
 			golemMessage.setId(articleId);
 			golemMessage.setPublished(new Date(metaData.date));
 			golemMessage.setTitle(golemArticle.headline);
-			golemMessage.setURL(golemArticle.headline);
+			golemMessage.setURL(golemArticle.url);
 			golemMessage.setAuthor(metaData.author);
 			golemMessage.setMessage(golemArticle.abstracttext);
 			if (golemArticle.numOfImages > 0) {
