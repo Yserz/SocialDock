@@ -1,29 +1,29 @@
 package de.fhb.sd.web.ui.util;
 
-import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import de.fhb.sd.domain.entity.Message;
 
 abstract public class DetailPanel extends CustomComponent {
 
-	protected VerticalLayout vertical = new VerticalLayout();
 	protected Message selectedMessage;
+	protected Panel detailPanel;
 
 	public DetailPanel(Message selectedMessage) {
 		super();
 		this.selectedMessage = selectedMessage;
-		setCompositionRoot(vertical);
-		vertical.setMargin(true);
+		detailPanel = new Panel();
+		detailPanel.setHeight(300, Unit.PIXELS);
+		setCompositionRoot(detailPanel);
 		setSizeFull();
 
 		init();
 	}
 
 	private void init() {
-		AbstractLayout layoutContent = addDetailContent();
-		vertical.addComponent(layoutContent);
+		detailPanel.setContent(addDetailContent());
 	}
 
-	protected abstract AbstractLayout addDetailContent();
+	protected abstract Panel addDetailContent();
 }

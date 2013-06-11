@@ -14,7 +14,11 @@ public class TwitterDetailPanel extends DetailPanel {
 	}
 
 	@Override
-	protected AbstractLayout addDetailContent() {
+	protected Panel addDetailContent() {
+		Panel detailPanel = new Panel();
+		detailPanel.setSizeFull();
+
+
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
 		horizontalLayout.setWidth(50, Unit.PERCENTAGE);
 		GridLayout infoGrid = new GridLayout(2, 3);
@@ -30,16 +34,23 @@ public class TwitterDetailPanel extends DetailPanel {
 			horizontalLayout.setWidth(110, Unit.PIXELS);
 
 			infoGrid.addComponent(new Label("Author: "));
-			infoGrid.addComponent(new Label(twitterM.getAuthor()));
+			Label authorLabel = new Label(twitterM.getAuthor());
+			authorLabel.setWidth("300px");
+			infoGrid.addComponent(authorLabel);
 
 			infoGrid.addComponent(new Label("Published: "));
-			infoGrid.addComponent(new Label(twitterM.getPublished() + ""));
+			Label publishedLabel = new Label(twitterM.getPublished() + "");
+			publishedLabel.setWidth("300px");
+			infoGrid.addComponent(publishedLabel);
 
 			infoGrid.addComponent(new Label("Message: "));
-			infoGrid.addComponent(new Label(twitterM.getMessage()));
+			Label messageLabel = new Label(twitterM.getMessage());
+			messageLabel.setWidth("300px");
+			infoGrid.addComponent(messageLabel);
 
 			horizontalLayout.addComponent(infoGrid);
 		}
-		return horizontalLayout;
+		detailPanel.setContent(infoGrid);
+		return detailPanel;
 	}
 }

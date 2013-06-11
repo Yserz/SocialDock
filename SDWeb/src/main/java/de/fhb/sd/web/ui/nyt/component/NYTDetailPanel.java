@@ -5,6 +5,7 @@ import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import de.fhb.sd.domain.entity.Message;
 import de.fhb.sd.domain.entity.NewYorkTimesMessage;
 import de.fhb.sd.web.ui.util.DetailPanel;
@@ -16,9 +17,13 @@ public class NYTDetailPanel extends DetailPanel {
 	}
 
 	@Override
-	protected AbstractLayout addDetailContent() {
+	protected Panel addDetailContent() {
+		Panel detailPanel = new Panel();
+		detailPanel.setSizeFull();
 
 		GridLayout infoGrid = new GridLayout(2, 5);
+		infoGrid.setWidth(100, Unit.PERCENTAGE);
+		infoGrid.setHeight(100, Unit.PERCENTAGE);
 
 		if (selectedMessage != null) {
 			NewYorkTimesMessage nytM = (NewYorkTimesMessage) selectedMessage;
@@ -31,20 +36,32 @@ public class NYTDetailPanel extends DetailPanel {
 			}
 
 			infoGrid.addComponent(new Label("Title: "));
-			infoGrid.addComponent(new Label(nytM.getTitle()));
+			Label titleLabel = new Label(nytM.getTitle());
+			titleLabel.setWidth("300px");
+			infoGrid.addComponent(titleLabel);
 
 			infoGrid.addComponent(new Label("Author: "));
-			infoGrid.addComponent(new Label(nytM.getAuthor()));
+			Label authorLabel = new Label(nytM.getAuthor());
+			authorLabel.setWidth("300px");
+			infoGrid.addComponent(authorLabel);
 
 			infoGrid.addComponent(new Label("Section: "));
-			infoGrid.addComponent(new Label(nytM.getSection()));
+			Label sectionLabel = new Label(nytM.getSection());
+			sectionLabel.setWidth("300px");
+			infoGrid.addComponent(sectionLabel);
 
 			infoGrid.addComponent(new Label("Published: "));
-			infoGrid.addComponent(new Label(nytM.getPublished() + ""));
+			Label publishedLabel = new Label(nytM.getPublished() + "");
+			publishedLabel.setWidth("300px");
+			infoGrid.addComponent(publishedLabel);
 
-			infoGrid.addComponent(new Label("Abstract: "));
-			infoGrid.addComponent(new Label(nytM.getMessage()));
+			infoGrid.addComponent(new Label("Message: "));
+			Label messageLabel = new Label(nytM.getMessage());
+			messageLabel.setWidth("300px");
+			infoGrid.addComponent(messageLabel);
+
 		}
-		return infoGrid;
+		detailPanel.setContent(infoGrid);
+		return detailPanel;
 	}
 }

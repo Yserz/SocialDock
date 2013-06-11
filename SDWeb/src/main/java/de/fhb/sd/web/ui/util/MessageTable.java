@@ -23,7 +23,8 @@ abstract public class MessageTable extends CustomComponent {
 		messageTable.setSizeFull();
 		this.detailPanel = detailPanel;
 		content.setSizeFull();
-		content.setSplitPosition(70, Unit.PERCENTAGE);
+		content.setSplitPosition(300, Unit.PIXELS, true);
+		content.setLocked(true);
 		content.addComponent(messageTable);
 		content.addComponent(detailPanel);
 		setCompositionRoot(content);
@@ -34,13 +35,14 @@ abstract public class MessageTable extends CustomComponent {
 
 	public void updateDetailPanel() {
 		DetailPanel newDetail = getNewDetailPanel();
+
 		content.replaceComponent(detailPanel, newDetail);
 		detailPanel = newDetail;
 	}
 
 	private void init() {
 		for (ColumnHeader column : addColumnHeader()) {
-			messageTable.addContainerProperty(column.columnName,column.columnClass, column.defaultValue);
+			messageTable.addContainerProperty(column.columnName, column.columnClass, column.defaultValue);
 			messageTable.setColumnWidth(column, -1);
 		}
 
@@ -64,7 +66,8 @@ abstract public class MessageTable extends CustomComponent {
 
 	abstract protected DetailPanel getNewDetailPanel();
 
-	protected class ColumnHeader{
+	protected class ColumnHeader {
+
 		protected String columnName;
 		protected Class columnClass;
 		protected Object defaultValue;
